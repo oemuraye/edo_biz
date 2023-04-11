@@ -50,11 +50,20 @@ export const programmePage = (req, res) => {
 export const successPage = (req, res) => {
     res.render("success", { title: "Success" });
 }
+export const errorPage = (req, res) => {
+    res.render("error", { title: "Error" });
+}
 
 export const teamPage = (req, res) => {
     res.render('team', {title: "Team"})
 }
 
+export const student_dashboard = (req, res) => {
+    res.render("student_dashboard", { title: "Dashboard" });
+}
+
 export const registerPage = (req, res) => {
-    res.render('register', {title: "Application"})
+    const errors = req.flash("error");
+    const formData = req.flash("formData")[0];
+    res.render("register", { title: "Application", errors, formData });
 }

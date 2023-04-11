@@ -3,12 +3,25 @@ import dotenv from "dotenv";
 import exphbs from "express-handlebars";
 import bodyParser from "body-parser";
 import cors from "cors";
+import flashMessages from "connect-flash";
+import flash from "express-flash";
+import session from "express-session";
+import _ from "lodash";
 
 import routes from "./routes/routes.js";
 
 const app = express();
 dotenv.config();
 app.use(cors());
+app.use(
+  session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(flashMessages());
+app.use(flash());
 
 // Enable body parser
 app.use(express.json());
