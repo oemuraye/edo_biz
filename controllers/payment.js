@@ -1,112 +1,87 @@
+import request from "request";
+import _ from "lodash";
+import { paystack } from "../utils/paystack.js";
 
-const paystack = (request) => {
-    const headers = {
-      authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
-      "content-type": "application/json",
-      "cache-control": "no-cache",
-    };
-
-    const initializePayment = (form, mycallback) => {
-      const options = {
-        url: `${process.env.PAYSTACK_BASE_URL}/transaction/initialize`,
-        headers,
-        form,
-      };
-      const callback = (error, response, body) => {
-        return mycallback(error, body);
-      };
-      request.post(options, callback);
-    };
-
-    const verifyPayment = (ref, mycallback) => {
-      const options = {
-        url: `${
-          process.env.PAYSTACK_BASE_URL
-        }/transaction/verify/${encodeURIComponent(ref)}`,
-        headers,
-      };
-      const callback = (error, response, body) => {
-        return mycallback(error, body);
-      };
-      request(options, callback);
-    };
-
-    return { initializePayment, verifyPayment };
-}
+const { initializePayment, verifyPayment } = paystack(request);
 
 export const paystack_init_payment = (req, res) => {
-    const { initializePayment } = paystack();
-    // const form = _.pick(req.body, ["amount", "email", "fullName"]);
-    const form = {
-        fullName: "Pius Henry",
-        email: "oemuraye@gmail.com",
-        amount: 10000
+  const form = _.pick(req.body, ["amount", "email", "fullName"]);
+  // const form = {
+  //   fullName: "Pius Henry",
+  //   email: "oemuraye@gmail.com",
+  //   amount: 10000,
+  // };
+
+  form.metadata = {
+    fullName: form.fullName,
+  };
+  form.amount *= 100;
+
+  initializePayment(form, (error, body) => {
+    if (error) {
+      return res.redirect("error");
+    } 
+    const response = JSON.parse(body);
+    console.log(response);
+    if (response.status === false) {
+      return res.status(400).redirect("error");
+    } else {
+      return res.status(200).redirect(response.data.authorization_url);
     }
-
-    form.metadata = {
-      fullName: form.fullName,
-    };
-    form.amount *= 100;
-
-    initializePayment(form, (error, body) => {
-      if (error) {
-        return res.redirect("error");
-      }
-      const response = JSON.parse(body);
-      res.redirect(response.data.authorization_url);
-    });
-}
+  });
+};
 
 export const paystack_verify_payment = (req, res) => {
-    const { verifyPayment } = paystack();
-    const ref = req.query.reference;
+  const ref = 'ntqv86klod';
+  // const ref = req.query.reference;
 
-    verifyPayment(ref, (error, body) => {
-        if (error) {
-          return res.redirect("error");
-        }
-        const response = JSON.parse(body);
+  verifyPayment(ref, (error, body) => {
+    if (error) {
+      return res.redirect("error");
+    }
+    const response = JSON.parse(body);
 
-        const data = _.at(response.data, [
-          "reference",
-          "amount",
-          "customer.email",
-          "metadata.fullName",
-        ]);
-        
-        const [reference, amount, email, fullName] = data;
-        const donor = new Donor({ reference, amount, email, fullName });
+    const data = _.at(response.data, [
+      "reference",
+      "amount",
+      "customer.email",
+      "metadata.fullName",
+    ]);
 
-        donor
-          .save()
-          .then((donor) => {
-            if (!donor) {
-              return res.redirect("error");
-            }
-            res.redirect("/receipt/" + donor._id);
-          })
-          .catch((e) => {
-            res.redirect("error");
-          });
-        
-    })
-}
+    console.log(response);
+    res.redirect("/dashboard");
+
+    // const [reference, amount, email, fullName] = data;
+
+    // const donor = new Donor({ reference, amount, email, fullName });
+
+    // donor
+    //   .save()
+    //   .then((donor) => {
+    //     if (!donor) {
+    //       return res.redirect("error");
+    //     }
+    //     res.redirect("/receipt/" + donor._id);
+    //   })
+    //   .catch((e) => {
+    //     res.redirect("error");
+    //   });
+  });
+};
 
 export const get_payment_receipt = (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    Donor.findById(id)
-      .then((donor) => {
-        if (!donor) {
-          res.redirect("error");
-        }
-        res.render("success", { donor });
-      })
-      .catch((e) => {
+  Donor.findById(id)
+    .then((donor) => {
+      if (!donor) {
         res.redirect("error");
-      });
-}
+      }
+      res.render("success", { donor });
+    })
+    .catch((e) => {
+      res.redirect("error");
+    });
+};
 
-export const paymentRequest = (req, res) => {
-    
-}
+export const paymentRequest = (req, res) => {};

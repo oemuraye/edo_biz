@@ -287,3 +287,39 @@
   });
 
 })();
+
+
+// Payment with paystack
+const pay_btn = document.querySelector('#pay-btn')
+
+pay_btn.addEventListener('click', async () => {
+  const name = document.querySelector('.student-name');      
+  const email = document.querySelector('.student-email');      
+  const amount = document.querySelector('.course-fee');  
+  
+  try {
+    const response = await fetch("/paystack_pay", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fullName: name.innerHTML,
+        email: email.innerHTML,
+        amount: amount.innerHTML,
+      })   
+    });
+    console.log(response);
+    // if (!response.ok) {
+    //   throw new Error("Network response was not ok");
+    // } else {
+    //   window.location(response.url);
+    // }
+
+    window.location.href = response.url;
+
+    
+  } catch (error) {
+    console.log(error);
+  }
+});

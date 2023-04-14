@@ -34,7 +34,7 @@ export const feedback = (req, res) => {
     if (error) {
       return res.render("contact", { email_failed_msg: "Error: Email was not sent!" });
     }
-    console.log(req.body.email);
+    // console.log(req.body.email);
     res.status(200).render("contact", { email_success_msg: "Email sent successfully" });
   });
 };
