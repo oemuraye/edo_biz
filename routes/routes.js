@@ -1,5 +1,5 @@
 import express from "express";
-import { aboutPage, blogPage, blogSinglePage, contactPage, detailPage, errorPage, faqPage, formPage, homePage, innerPage, portfolioDetailsPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
+import { aboutPage, blogPage, blogSinglePage, contactPage, detailPage, errorPage, faqPage, formPage, homePage, innerPage, loginPage, portfolioDetailsPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
 import { feedback } from "../controllers/mailings.js";
 import { register } from "../controllers/user.js";
 import { get_payment_receipt, paystack_init_payment, paystack_verify_payment } from "../controllers/payment.js";
@@ -29,11 +29,12 @@ router.get("/dashboard", student_dashboard);
 router.post("/feedback", feedback);
 
 // Registration of student
+router.get("/login", loginPage);
 router.post("/signup", register);
 
 //Make Payments
 router.post("/paystack_pay", paystack_init_payment)
-router.get("/paystack/callback" , paystack_verify_payment);
+router.get("/paystack/callback", paystack_verify_payment);
 router.get("/receipt/:id", get_payment_receipt);
 
 export default router;

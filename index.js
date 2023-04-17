@@ -6,6 +6,7 @@ import cors from "cors";
 import flashMessages from "connect-flash";
 import flash from "express-flash";
 import session from "express-session";
+import cookieParser from "cookie-parser";
 import _ from "lodash";
 
 import routes from "./routes/routes.js";
@@ -20,6 +21,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use(cookieParser());
 app.use(flashMessages());
 app.use(flash());
 

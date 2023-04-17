@@ -318,8 +318,38 @@ pay_btn.addEventListener('click', async () => {
 
     window.location.href = response.url;
 
+    // setTimeout(() => {
+    //   verify_payment(response.)
+    // }, 3000);
+
     
   } catch (error) {
     console.log(error);
   }
 });
+
+ const verify_payment = async (student_ref) => {
+  
+  try {
+    const response = await fetch("/paystack/callback", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: student_ref
+    });
+
+    console.log(response);
+    // if (!response.ok) {
+    //   throw new Error("Network response was not ok");
+    // } else {
+    //   window.location(response.url);
+    // }
+
+    // window.location.href = response.url;
+
+    
+  } catch (error) {
+    console.log(error);
+  }
+};

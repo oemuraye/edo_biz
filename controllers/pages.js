@@ -67,3 +67,9 @@ export const registerPage = (req, res) => {
     const formData = req.flash("formData")[0];
     res.render("register", { title: "Application", errors, formData });
 }
+
+export const loginPage = (req, res) => {
+    const errors = req.flash("error");
+    const formData = req.flash("formData")[0];
+    res.render("login", { title: "Application", errors, formData });
+}

@@ -49,7 +49,7 @@ export const paystack_verify_payment = (req, res) => {
     ]);
 
     console.log(response);
-    res.redirect("/dashboard");
+    res.send({payment_status: true});
 
     // const [reference, amount, email, fullName] = data;
 
