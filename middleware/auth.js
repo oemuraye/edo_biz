@@ -8,7 +8,7 @@ export const auth = async (req, res, next) => {
     let decodedData;
 
     if (token && isCustomAuth) {
-      decodedData = jwt.verify(token, "memories");
+      decodedData = jwt.verify(token, "edobiz");
       req.userId = decodedData?.id;
     } else {
       decodedData = jwt.decode(token);

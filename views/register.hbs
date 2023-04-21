@@ -48,16 +48,7 @@
 }
 
 </style>
-<div class="reg-form container">
-  
-  <!-- Display error messages -->
-    {{#each errors}}
-      <div class="alert alert-danger" role="alert">
-        {{this}}
-      </div>
-    {{/each}}
-  {{/if}}
-  
+<div class="reg-form container">  
   <form action="/signup" method="post">
     {{> flash}}
      <div class="row gy-2">
@@ -70,12 +61,12 @@
           <input type="text" class="form-control" value="{{formData.last_name}}" name="last_name">
         </div>
         <div class="form-group col-md-12">
-          <label for="dob">Date of Birth</label>
-          <input type="date" class="form-control" value="{{formData.dob}}" name="dob">
-        </div>
-        <div class="form-group col-md-12">
           <label for="email">Email address</label>
           <input type="email" class="form-control" value="{{formData.email}}" name="email">
+        </div>
+        <div class="form-group col-md-12">
+          <label for="dob">Date of Birth</label>
+          <input type="date" class="form-control" value="{{formData.dob}}" name="dob">
         </div>
         <div class="form-group col-md-12">
           <label for="address">Address</label>
@@ -83,11 +74,11 @@
         </div>
         <div class="form-group col-md-6">
           <label for="first_name">Password</label>
-          <input type="text" class="form-control" name="password">
+          <input type="password" class="form-control" name="password">
         </div>
         <div class="form-group col-md-6">
           <label for="first_name">Confirm Password</label>
-          <input type="text" class="form-control" name="confirm_password">
+          <input type="password" class="form-control" name="confirm_password">
         </div>
      </div>   
     <button type="submit" class="btn" >Submit</button>

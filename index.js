@@ -8,6 +8,7 @@ import flash from "express-flash";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import _ from "lodash";
+import mongoose from "mongoose";
 
 import routes from "./routes/routes.js";
 
@@ -35,6 +36,7 @@ app.engine("hbs", exphbs.engine({ extname: ".hbs" }));
 app.set("view engine", "hbs");
 
 const PORT = process.env.PORT || 5000;
+const connectionURL = process.env.MONGODB_URL;
 
 // app.get("/", (req, res) => {
 //   res.send("Welcome...");
@@ -42,6 +44,9 @@ const PORT = process.env.PORT || 5000;
 
 app.use("/", routes);
 
-app.listen(PORT, () => {
-  console.log(` server started on port http://localhost:${PORT} `);
-});
+mongoose
+  .connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() =>
+    app.listen(PORT, () => console.log(`Server is up on port http://localhost:${PORT}`))
+  )
+  .catch((error) => console.log(error.message));

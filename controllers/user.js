@@ -1,21 +1,20 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+import User from '../models/user.js';
+
 export const register = async (req, res) => {
   const {
     first_name,
     last_name,
     email,
-    address,
-    dob,
     password,
     confirm_password,
   } = req.body;
-  const validRegex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   const errors = [];
 
-  // const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ email });
 
 
   // Check required fields
@@ -23,8 +22,6 @@ export const register = async (req, res) => {
     !first_name ||
     !last_name ||
     !email ||
-    !address ||
-    !dob ||
     !password ||
     !confirm_password
   ) {
@@ -43,43 +40,50 @@ export const register = async (req, res) => {
   if (password.length < 6) {
     errors.push("Password should be at least 6 character");
   }
+  // Check if email already exists
+  if (existingUser) {
+    errors.push("A User with this email already exists");
+  }
 
   
   
   if (errors.length > 0) {
     req.flash("error", errors);
-    req.flash("formData", { first_name, last_name, email, address, dob });
+    req.flash("formData", { first_name, last_name, email });
     res.redirect("/register");
   } else {
+
     // Save data to database or send email
-    // const hashedPassword = await bcrypt.hash(password, 10);
-    // const result = await User.create({
-    //   email,
-    //   password: hashedPassword,
-    //   name: `${firstName} ${lastName}`,
-    // });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const student_data = await User.create({
+      name: `${first_name} ${last_name}`,
+      email,
+      password: hashedPassword,
+    });
 
-    // const token = jwt.sign(
-    //   { email: result.email, id: result._id },
-    //   "memories",
-    //   { expiresIn: "1h" }
-    // );
+    const token = jwt.sign({ student_data }, "ebobiz", { expiresIn: "1h" });
+    console.log(student_data);
+    console.log(token);
+    return res.status(200).render('success', {student_data, token});
 
-    // return res.status(200).render('success', {result, token});
-
-    res.redirect("success");
+    // res.redirect("success");
   }
 };
 
-export const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    // const existingUser = await User.findOne({ email });
+export const signin = async (req, res) => {
+    const { email, password } = req.body;
+  
+    console.log( email);
+    const existingUser = await User.findOne({ email });
     const errors = [];
+    console.log(existingUser);
 
+    // Check required fields
+    if (!email || !password ) {
+      errors.push("Please fill in all fields");
+    }
     if (!existingUser) {
-      return errors.push("User does not exist");
+      errors.push("User does not exist");
     }
 
     const isPasswordCorrect = await bcrypt.compare(
@@ -88,24 +92,20 @@ export const login = async (req, res) => {
     );
 
     if (!isPasswordCorrect) {
-      return errors.push("Password is not correct");
+      errors.push("Password is not correct");
     }
 
-    const token = jwt.sign(
-      { email: existingUser.email, id: existingUser._id },
-      "edobiz",
-      { expiresIn: "1h" }
-    );
+    const token = jwt.sign({ existingUser }, "edobiz", { expiresIn: "1h" });
 
     if (errors.length > 0) {
       req.flash("error", errors);
       req.flash("formData", { email });
       res.redirect("/login");
     } else {
-      res.cookie('jwt', token);
-      res.status(200).render("dashboard", { result: existingUser });
+      const student_data = existingUser
+      res.status(200).redirect("/dashboard", + student_data, token );
     }
-  } catch (error) {
-    res.status(500).render({ message: "Something went wrong." });
-  }
+  // } catch (error) {
+  //   res.status(500).render({ message: "Something went wrong." });
+  // }
 };
