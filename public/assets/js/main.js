@@ -318,9 +318,12 @@ pay_btn.addEventListener('click', async () => {
 
     window.location.href = response.url;
 
-    // setTimeout(() => {
-    //   verify_payment(response.)
-    // }, 3000);
+    const paystack_url = new URL(response.url);
+    const student_ref = paystack_url.pathname;
+
+    setTimeout(() => {
+      verify_payment(student_ref)
+    }, 9000);
 
     
   } catch (error) {
@@ -338,6 +341,7 @@ pay_btn.addEventListener('click', async () => {
       },
       body: student_ref
     });
+    console.log('sdfgh');
 
     console.log(response);
     // if (!response.ok) {

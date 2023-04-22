@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { logout } from "../controllers/user.js";
 
 export const auth = async (req, res, next) => {
   try {
@@ -8,7 +9,7 @@ export const auth = async (req, res, next) => {
     let decodedData;
 
     if (token && isCustomAuth) {
-      decodedData = jwt.verify(token, "edobiz");
+      decodedData = jwt.verify(token, process.env.JWT_SECRET);
       req.userId = decodedData?.id;
     } else {
       decodedData = jwt.decode(token);
@@ -18,5 +19,27 @@ export const auth = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
+  }
+};
+
+// middleware to check JWT token and log out if it's expired
+export const checkToken = (req, res, next) => {
+  // get token from cookie or header
+  const token = req.session?.token;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+      if (err) {
+        // token has expired, log user out and redirect to login page
+        logout()
+        return res.redirect('/login');
+      } else {
+        // token is valid, continue to next middleware
+        next();
+      }
+    });
+  } else {
+    // no token found, redirect to login page
+    res.redirect('/login');
   }
 };

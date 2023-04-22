@@ -1,5 +1,7 @@
 export const homePage = (req, res) => {
-    res.render('index', { title: "Home" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('index', { title: "Home", student_data, token });
 }
 
 export const aboutPage = (req, res) => {
@@ -59,7 +61,13 @@ export const teamPage = (req, res) => {
 }
 
 export const student_dashboard = (req, res) => {
-    res.render("student_dashboard", { title: "Dashboard" });
+    const student_data = req.session.user;
+    const token = req.session.token;
+    if (!token) {
+        res.render("login");
+    } else {
+        res.render("student_dashboard", { title: "Dashboard", student_data, token });
+    }
 }
 
 export const registerPage = (req, res) => {
@@ -70,6 +78,7 @@ export const registerPage = (req, res) => {
 
 export const loginPage = (req, res) => {
     const errors = req.flash("error");
+    const success_msg = req.flash("success_msg");
     const formData = req.flash("formData")[0];
-    res.render("login", { title: "Application", errors, formData });
+    res.render("login", { title: "Application", errors, formData, success_msg });
 }

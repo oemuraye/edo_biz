@@ -22,7 +22,7 @@ export const paystack_init_payment = (req, res) => {
       return res.redirect("error");
     } 
     const response = JSON.parse(body);
-    console.log(response);
+
     if (response.status === false) {
       return res.status(400).redirect("error");
     } else {

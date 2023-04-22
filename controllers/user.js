@@ -61,10 +61,11 @@ export const register = async (req, res) => {
       password: hashedPassword,
     });
 
-    const token = jwt.sign({ student_data }, "ebobiz", { expiresIn: "1h" });
-    console.log(student_data);
+    const token = jwt.sign({ student_data }, process.env.JWT_SECRET, { expiresIn: "300s" });
     console.log(token);
-    return res.status(200).render('success', {student_data, token});
+    req.flash("success_msg", "You are now registered and can log in");
+    req.flash("formData", { email });
+    res.redirect("/login");
 
     // res.redirect("success");
   }
@@ -73,10 +74,8 @@ export const register = async (req, res) => {
 export const signin = async (req, res) => {
     const { email, password } = req.body;
   
-    console.log( email);
     const existingUser = await User.findOne({ email });
     const errors = [];
-    console.log(existingUser);
 
     // Check required fields
     if (!email || !password ) {
@@ -86,26 +85,34 @@ export const signin = async (req, res) => {
       errors.push("User does not exist");
     }
 
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      existingUser.password
-    );
-
-    if (!isPasswordCorrect) {
-      errors.push("Password is not correct");
-    }
-
-    const token = jwt.sign({ existingUser }, "edobiz", { expiresIn: "1h" });
-
+    
     if (errors.length > 0) {
       req.flash("error", errors);
       req.flash("formData", { email });
       res.redirect("/login");
     } else {
+      const isPasswordCorrect = await bcrypt.compare(
+        password,
+        existingUser.password
+      );
+  
+      if (!isPasswordCorrect) {
+        errors.push("Password is not correct");
+      }
+  
+      const token = jwt.sign({ existingUser }, "edobiz", { expiresIn: "300s" });
       const student_data = existingUser
-      res.status(200).redirect("/dashboard", + student_data, token );
+
+      req.session.user = student_data;
+      req.session.token = token;
+      res.status(200).redirect("/dashboard");
     }
   // } catch (error) {
   //   res.status(500).render({ message: "Something went wrong." });
   // }
 };
+
+export const logout = (req, res) => {
+  req.session.destroy();
+  res.redirect("/");
+}

@@ -1,3 +1,43 @@
+  <style>
+    /* Dropdown Button */
+.dropbtn {
+  color: #218e0b !important;
+  font-size: 20px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+</style>
+
+
   <header id="header" class="header fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
@@ -22,10 +62,18 @@
           <li><a  href="contact"> Contact </a></li>
 
           {{#if token}}
-            <li><a  href="dashboard"> Dashboard </a></li>
-          {{/if}}
+            <li>
+              <div class="dropdown">
+                <a class="dropbtn">{{student_data.email}} <i class="fa fa-arrow-down " aria-hidden="true"></i> </a>
+                <div class="dropdown-content">
+                  <a href="dashboard">Dashboard</a>
+                  <a href="logout">Logout</a>
+                </div>
+              </div>
+            </li>
+          {{else}}
           <li><a  href="login"> Login </a></li>
-
+          {{/if}}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->

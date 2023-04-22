@@ -1,8 +1,9 @@
 import express from "express";
 import { aboutPage, blogPage, blogSinglePage, contactPage, detailPage, errorPage, faqPage, formPage, homePage, innerPage, loginPage, portfolioDetailsPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
 import { feedback } from "../controllers/mailings.js";
-import { register, signin } from "../controllers/user.js";
+import { logout, register, signin } from "../controllers/user.js";
 import { get_payment_receipt, paystack_init_payment, paystack_verify_payment } from "../controllers/payment.js";
+import { checkToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -23,7 +24,7 @@ router.get("/success", successPage);
 router.get("/error", errorPage);
 router.get("/team", teamPage);
 router.get("/register", registerPage);
-router.get("/dashboard", student_dashboard);
+router.get("/dashboard", checkToken, student_dashboard);
 router.get("/login", loginPage);
 
 // Feedback-contact mailing
@@ -32,6 +33,7 @@ router.post("/feedback", feedback);
 // Registration of student
 router.post("/signin", signin);
 router.post("/signup", register);
+router.get("/logout", logout);
 
 //Make Payments
 router.post("/paystack_pay", paystack_init_payment)
