@@ -309,50 +309,39 @@ pay_btn.addEventListener('click', async () => {
         amount: amount.innerHTML,
       })   
     });
-    console.log(response);
-    // if (!response.ok) {
-    //   throw new Error("Network response was not ok");
-    // } else {
-    //   window.location(response.url);
-    // }
 
-    window.location.href = response.url;
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    } else {
+      window.location.href = response.url.split("?")[0];
+    }
 
     const paystack_url = new URL(response.url);
-    const student_ref = paystack_url.pathname;
+    const search_params = new URLSearchParams(paystack_url.search);
+    const student_ref = search_params.get("reference");
 
     setTimeout(() => {
-      verify_payment(student_ref)
-    }, 9000);
-
+      verify_payment(student_ref);
+    }, 10000);
     
   } catch (error) {
     console.log(error);
   }
 });
 
+
  const verify_payment = async (student_ref) => {
   
   try {
-    const response = await fetch("/paystack/callback", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: student_ref
-    });
-    console.log('sdfgh');
+    const response = await fetch(`/paystack/callback/${student_ref}`);
 
-    console.log(response);
-    // if (!response.ok) {
-    //   throw new Error("Network response was not ok");
-    // } else {
-    //   window.location(response.url);
-    // }
+    if (!response.ok) {
+      throw new Error("Transaction was not found");
+    } else {
+      console.log(response);
+      // window.location(response.url);
+    }
 
-    // window.location.href = response.url;
-
-    
   } catch (error) {
     console.log(error);
   }

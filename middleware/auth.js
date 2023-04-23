@@ -25,14 +25,15 @@ export const auth = async (req, res, next) => {
 // middleware to check JWT token and log out if it's expired
 export const checkToken = (req, res, next) => {
   // get token from cookie or header
-  const token = req.session?.token;
+  const token = req.session.token;
 
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
       if (err) {
         // token has expired, log user out and redirect to login page
-        logout()
-        return res.redirect('/login');
+        req.session.destroy(() => {
+          return res.redirect('/login')
+        });
       } else {
         // token is valid, continue to next middleware
         next();
@@ -40,6 +41,6 @@ export const checkToken = (req, res, next) => {
     });
   } else {
     // no token found, redirect to login page
-    res.redirect('/login');
+    return res.redirect('/login')
   }
 };

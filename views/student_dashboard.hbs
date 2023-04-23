@@ -86,12 +86,19 @@
                 <td width="2%">:</td>
                 <td>Web Development</td>
               </tr>
-              <tr>
-                <th width="30%">Make Payment</th>
-                <td width="2%">:</td>
-                <td><span id="pay-btn" class="btn btn-sm btn-success">Make Payment</span></td>
-                {{!-- <td class="text-success">Payment Made <i class="fa fa-check"></i></td> --}}
-              </tr>
+              {{#if student_data.hasPaid}}
+                <tr>
+                  <th width="30%">Payment</th>
+                  <td width="2%">:</td>
+                  <td class="text-success">Paid <i class="fa fa-check-circle" aria-hidden="true"></i> </td>
+                </tr>
+              {{else}}
+                <tr>
+                  <th width="30%">Payment</th>
+                  <td width="2%">:</td>
+                  <td><span id="pay-btn" class="btn btn-sm btn-success">Make Payment</span></td>
+                </tr>
+              {{/if}}
             </table>
           </div>
         </div>

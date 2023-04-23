@@ -37,7 +37,7 @@ router.get("/logout", logout);
 
 //Make Payments
 router.post("/paystack_pay", paystack_init_payment)
-router.get("/paystack/callback", paystack_verify_payment);
+router.get("/paystack/callback/:id", paystack_verify_payment);
 router.get("/receipt/:id", get_payment_receipt);
 
 export default router;

@@ -62,15 +62,17 @@
           <li><a  href="contact"> Contact </a></li>
 
           {{#if token}}
+          {{#student_data}}
             <li>
               <div class="dropdown">
-                <a class="dropbtn">{{student_data.email}} <i class="fa fa-arrow-down " aria-hidden="true"></i> </a>
+                <a class="dropbtn">{{email}} <i class="fa fa-arrow-down " aria-hidden="true"></i> </a>
                 <div class="dropdown-content">
                   <a href="dashboard">Dashboard</a>
                   <a href="logout">Logout</a>
                 </div>
               </div>
             </li>
+           {{/student_data}}
           {{else}}
           <li><a  href="login"> Login </a></li>
           {{/if}}

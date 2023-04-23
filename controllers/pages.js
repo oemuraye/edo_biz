@@ -5,59 +5,87 @@ export const homePage = (req, res) => {
 }
 
 export const aboutPage = (req, res) => {
-    res.render('about', { title: "about" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('about', { title: "about" , student_data, token})
 }
 
 
 export const blogSinglePage = (req, res) => {
-    res.render('blog-single', { title: "Blog_Single" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('blog-single', { title: "Blog_Single" , student_data, token})
 }
 
 export const blogPage = (req, res) => {
-    res.render('blog', { title: "Blog" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('blog', { title: "Blog" , student_data, token})
 }
 
 export const contactPage = (req, res) => {
-    res.render('contact', { title: "Contact" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('contact', { title: "Contact" , student_data, token})
 }
 
 export const detailPage = (req, res) => {
-    res.render('detail', { title: "Detail" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('detail', { title: "Detail" , student_data, token})
 }
 
 export const faqPage = (req, res) => {
-    res.render('faq', { title: "FAQ" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('faq', { title: "FAQ" , student_data, token})
 }
 
 export const formPage = (req, res) => {
-    res.render('form', { title: "Form" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('form', { title: "Form" , student_data, token})
 }
 
 export const innerPage = (req, res) => {
-    res.render('inner-page', { title: "Inner_Page" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('inner-page', { title: "Inner_Page" , student_data, token})
 }
 
 export const portfolioDetailsPage = (req, res) => {
-    res.render('portfolio-details', { title: "Portfolio_Details" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('portfolio-details', { title: "Portfolio_Details" , student_data, token})
 }
 
 export const programPage = (req, res) => {
-    res.render('program', { title: "Program" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('program', { title: "Program" , student_data, token})
 }
 
 export const programmePage = (req, res) => {
-    res.render('programme', { title: "Programme" })
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('programme', { title: "Programme" , student_data, token})
 }
 
 export const successPage = (req, res) => {
-    res.render("success", { title: "Success" });
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render("success", { title: "Success" , student_data, token});
 }
 export const errorPage = (req, res) => {
-    res.render("error", { title: "Error" });
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render("error", { title: "Error" , student_data, token});
 }
 
 export const teamPage = (req, res) => {
-    res.render('team', {title: "Team"})
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('team', {title: "Team", student_data, token})
 }
 
 export const student_dashboard = (req, res) => {

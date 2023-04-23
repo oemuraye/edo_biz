@@ -1,16 +1,13 @@
 import request from "request";
 import _ from "lodash";
+
+import User from "../models/user.js";
 import { paystack } from "../utils/paystack.js";
 
 const { initializePayment, verifyPayment } = paystack(request);
 
 export const paystack_init_payment = (req, res) => {
   const form = _.pick(req.body, ["amount", "email", "fullName"]);
-  // const form = {
-  //   fullName: "Pius Henry",
-  //   email: "oemuraye@gmail.com",
-  //   amount: 10000,
-  // };
 
   form.metadata = {
     fullName: form.fullName,
@@ -26,30 +23,33 @@ export const paystack_init_payment = (req, res) => {
     if (response.status === false) {
       return res.status(400).redirect("error");
     } else {
-      return res.status(200).redirect(response.data.authorization_url);
+      return res.status(200).redirect(`${response.data.authorization_url}?reference=${response.data.reference}`);
     }
   });
 };
 
 export const paystack_verify_payment = (req, res) => {
-  const ref = 'ntqv86klod';
-  // const ref = req.query.reference;
+  const ref = req.params;
 
-  verifyPayment(ref, (error, body) => {
+  verifyPayment(ref.id, async (error, body) => {
     if (error) {
       return res.redirect("error");
     }
+    
     const response = JSON.parse(body);
-
-    const data = _.at(response.data, [
-      "reference",
-      "amount",
-      "customer.email",
-      "metadata.fullName",
-    ]);
-
-    console.log(response);
-    res.send({payment_status: true});
+    
+    const email = response.data.customer.email;
+    const student_data = await User.findOne({ email });
+    
+    if (response.status === false) {
+      return res.status(400).send("error");
+    } else {
+      student_data.hasPaid = true;
+      student_data.payment_ref = ref.id;
+      await student_data.save();
+      return res.status(200).send("paid");
+    }
+    
 
     // const [reference, amount, email, fullName] = data;
 

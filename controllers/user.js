@@ -61,7 +61,7 @@ export const register = async (req, res) => {
       password: hashedPassword,
     });
 
-    const token = jwt.sign({ student_data }, process.env.JWT_SECRET, { expiresIn: "300s" });
+    const token = jwt.sign({ student_data }, process.env.JWT_SECRET, { expiresIn: "1hr" });
     console.log(token);
     req.flash("success_msg", "You are now registered and can log in");
     req.flash("formData", { email });
@@ -85,7 +85,6 @@ export const signin = async (req, res) => {
       errors.push("User does not exist");
     }
 
-    
     if (errors.length > 0) {
       req.flash("error", errors);
       req.flash("formData", { email });
@@ -100,7 +99,7 @@ export const signin = async (req, res) => {
         errors.push("Password is not correct");
       }
   
-      const token = jwt.sign({ existingUser }, "edobiz", { expiresIn: "300s" });
+      const token = jwt.sign({ existingUser }, "edobiz", { expiresIn: "1hr" });
       const student_data = existingUser
 
       req.session.user = student_data;
@@ -113,6 +112,8 @@ export const signin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  req.session.destroy();
+  if (req.session) {
+    req.session?.destroy();
+  }
   res.redirect("/");
 }
