@@ -361,86 +361,45 @@ a.ssolink {
 
 
               <div id="login-root">
-                <form id="btn1">
-                    <div class="field padding-bottom--24">
-                      <label for="email">Email</label>
-                      <input type="email" name="email">
+                <form id="btn1" action="/signup" method="post" class="row gy-2">
+                {{> flash}}
+
+                    <div class="form-group col-md-6">
+                      <label for="first_name">First Name</label>
+                      <input type="text" class="form-control" value="{{formData.first_name}}" name="first_name">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="last_name">Last Name</label>
+                      <input type="text" class="form-control" value="{{formData.last_name}}" name="last_name">
                     </div>
 
-                    <div class="field padding-bottom--24">
-                      <label for="name">Name</label>
-                      <input type="text" name="name">
+                    <div class="form-group col-md-12">
+                      <label for="email">Email address</label>
+                      <input type="email" class="form-control" value="{{formData.email}}" name="email">
                     </div>
-
-
-                    <div class="field padding-bottom--24">
-                      <label for="phone">Phone</label>
-                      <input type="tel" name="phone">
+                    <div class="form-group col-md-12">
+                      <label for="dob">Date of Birth</label>
+                      <input type="date" class="form-control" value="{{formData.dob}}" name="dob">
                     </div>
-
-                    <div class="field padding-bottom--24">
-                      <div class="grid--50-50">
-                        <label for="address">Address</label>
-                        <!-- <div class="reset-pass">
-                          <a href="#">Forgot your password?</a>
-                        </div> -->
-                      </div>
-                      <input type="address" name="address">
+                    <div class="form-group col-md-12">
+                      <label for="address">Address</label>
+                      <input type="text" class="form-control" value="{{formData.address}}" name="address">
                     </div>
-                    <div class="field padding-bottom--24">
-                        <div class="grid--50-50">
-                          <label for="state">State</label>
-                          <!-- <div class="reset-pass">
-                            <a href="#">Forgot your password?</a>
-                          </div> -->
-                        </div>
-                        <input type="text" name="state">
-                      </div>
-                      <div class="field padding-bottom--24">
-                        <div class="grid--50-50">
-                          <label for="country">Country</label>
-                          <!-- <div class="reset-pass">
-                            <a href="#">Forgot your password?</a>
-                          </div> -->
-                        </div>
-                        <input name="country" mbsc-input id="demo-country-picker" data-dropdown="true" data-input-style="box" data-label-style="stacked" placeholder="Enter Country..." />
-                      </div>
-                   
-                    <div class="field padding-bottom--24" id="button1">
-                      <input type="submit" name="submit" value="Continue">
+                    <div class="form-group col-md-6">
+                      <label for="first_name">Password</label>
+                      <input type="password" class="form-control" name="password">
                     </div>
-                    <center>
-                        <div id="loader"></div>
-                      </center>
-                  
+                    <div class="form-group col-md-6">
+                      <label for="first_name">Confirm Password</label>
+                      <input type="password" class="form-control" name="confirm_password">
+                    </div>
+                    <div class="form-group col-md-12 mt-3">
+                      <button type="submit" class="btn btn-info w-100">Submit</button>
+                    </div>
                   </form>
               </div>
-           
-
-
-
-              <div id="card">
-                  <center>
-                    <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
-                        <i class="checkmark">✓</i>
-                      </div>
-                        <h1 id="h1">Success</h1> 
-                        <p id="p">We received your request;<br/> we'll be in touch shortly!</p>
-                      </div>
-                  </center>              
             </div>
             
-          </div>
-          <div class="footer-link padding-top--24">
-           
-             
-                
-    
-            <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
-              <span><a href="#">© E.B School</a></span>
-              <span><a href="#">Contact</a></span>
-              <span><a href="#">Privacy & terms</a></span>
-            </div>
           </div>
         </div>
       </div>

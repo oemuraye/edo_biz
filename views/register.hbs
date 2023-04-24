@@ -1,86 +1,140 @@
 <style>
-.reg-form {
-    margin-top: 150px;
-    margin-bottom: 75px;
-}
-.reg-form form {
-  min-width:300px;
-  max-width:400px;
-  padding:20px;
-  margin: 0 auto;
-  background:#ffffff59; 
-  -webkit-box-shadow: 3px 3px 23px -9px rgba(0,0,0,0.86);
-  -moz-box-shadow: 3px 3px 23px -9px rgba(0,0,0,0.86);
-  box-shadow: 3px 3px 23px -9px rgba(0,0,0,0.86);
-    background: #70e1f5;
-  background: -webkit-linear-gradient(to right, #ffd19474, #75d2e392);  
-  background: linear-gradient(to right, #ffd19490, #6fc8d877);
-}
-
-.reg-form form input {
-  border:1px solid #eee;
-  border-radius:0 !important;
-  padding:5px 8px;
-  color:#444;
-  box-shadow: inset 1px -20px 6px 6px rgba(255, 255, 255, 0.91), inset -20px 2px 10px 0px rgba(0, 0, 0, 0.25);
-}
-
-
-.reg-form form input:focus {
-    outline: none !important;
-    border: none !important;
-}
-
-.reg-form form button {
-  color:#555;
-  background:#ffffffad;
-  border:1px solid #fff !important;
-  margin-top:20px;
-  border-radius:0px Important;
-}
-
-.reg-form form button:hover {
-  background:#fff !important;
-}
-
-.pull-right {
-  float:right;
-}
-
+  .box-root { 
+    box-sizing: border-box; 
+    margin-top: 50px; 
+    margin-bottom: 50px; 
+  }
+  .formbg { 
+    margin: 0px auto; 
+    width: 100%; 
+    max-width: 448px; 
+    background: white;
+    border-radius: 4px; 
+    box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px; } span { 
+    display: block; 
+    font-size: 20px;
+    line-height: 28px; 
+    color: #1a1f36; } label { 
+    margin-bottom: 5px; }
+  .flex-justifyContent--center { 
+    -ms-flex-pack: center; 
+    justify-content: center;
+  } 
+  .padding-horizontal--48 { 
+    padding: 48px; 
+  } 
+  .padding-bottom--15 {
+    padding-bottom: 15px; 
+  } 
+  .padding-top--48 { 
+    padding-top: 48px; 
+  } 
+  .flex-flex {
+    display: flex; 
+  } .flex-direction--column { 
+    -ms-flex-direction: column;
+    flex-direction: column; 
+  } 
+  .flex-justifyContent--center { 
+    -ms-flex-pack: center; 
+    justify-content: center; 
+  } 
+  .box-root h1 { 
+    color: #4154f1; 
+  } 
+  form .btn.w-100 { 
+    background-color: #4154f1; 
+    color: #f0f0f0; 
+  }
 </style>
-<div class="reg-form container">  
-  <form action="/signup" method="post">
-    {{> flash}}
-     <div class="row gy-2">
-        <div class="form-group col-md-6">
-          <label for="first_name">First Name</label>
-          <input type="text" class="form-control" value="{{formData.first_name}}" name="first_name">
+<div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+  <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+    <h1>REGISTER <i class="fa fa-registered" aria-hidden="true"></i> </h1>
+  </div>
+  <div class="formbg-outer">
+    <div class="formbg">
+      <div class="formbg-inner padding-horizontal--48">
+        <span class="padding-bottom--15">Register for the course</span>
+        <span id="title1" class="padding-bottom--15"></span>
+
+        <div id="login-root">
+          <form id="btn1" action="/signup" method="post" enctype="multipart/form-data" class="row gy-2">
+            {{> flash}}
+            <div class="form-group col-md-6">
+              <label for="first_name">First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                value="{{formData.first_name}}"
+                name="first_name"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="last_name">Last Name</label>
+              <input
+                type="text"
+                class="form-control"
+                value="{{formData.last_name}}"
+                name="last_name"
+              />
+            </div>
+
+            <div class="form-group col-md-12">
+              <label for="email">Email address</label>
+              <input
+                type="email"
+                class="form-control"
+                value="{{formData.email}}"
+                name="email"
+              />
+            </div>
+            <div class="form-group col-md-12">
+              <label for="dob">Date of Birth</label>
+              <input
+                type="date"
+                class="form-control"
+                value="{{formData.dob}}"
+                name="dob"
+              />
+            </div>
+            <div class="form-group col-md-12">
+              <label for="address">Address</label>
+              <input
+                type="text"
+                class="form-control"
+                value="{{formData.address}}"
+                name="address"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="first_name">Password</label>
+              <input type="password" value="{{formData.password}}" class="form-control" name="password" />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="first_name">Confirm Password</label>
+              <input
+                type="password"
+                class="form-control"
+                name="confirm_password"
+                value="{{formData.confirm_password}}"
+              />
+            </div>
+            <div class="form-group col-md-12">
+              <label for="address">Image</label>
+              <input
+                type="file"
+                class="form-control"
+                value="{{formData.profile_image}}"
+                name="avatar"
+              />
+            </div>
+            <div class="form-group col-md-12 mt-3">
+              <button type="submit" class="btn w-100">Submit</button>
+            </div>
+          </form>
         </div>
-        <div class="form-group col-md-6">
-          <label for="last_name">Last Name</label>
-          <input type="text" class="form-control" value="{{formData.last_name}}" name="last_name">
-        </div>
-        <div class="form-group col-md-12">
-          <label for="email">Email address</label>
-          <input type="email" class="form-control" value="{{formData.email}}" name="email">
-        </div>
-        <div class="form-group col-md-12">
-          <label for="dob">Date of Birth</label>
-          <input type="date" class="form-control" value="{{formData.dob}}" name="dob">
-        </div>
-        <div class="form-group col-md-12">
-          <label for="address">Address</label>
-          <input type="text" class="form-control" value="{{formData.address}}" name="address">
-        </div>
-        <div class="form-group col-md-6">
-          <label for="first_name">Password</label>
-          <input type="password" class="form-control" name="password">
-        </div>
-        <div class="form-group col-md-6">
-          <label for="first_name">Confirm Password</label>
-          <input type="password" class="form-control" name="confirm_password">
-        </div>
-     </div>   
-    <button type="submit" class="btn" >Submit</button>
-  </form>
+      </div>
+
+    </div>
+  </div>
 </div>

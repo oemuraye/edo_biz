@@ -9,10 +9,13 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import _ from "lodash";
 import mongoose from "mongoose";
+import multer from "multer";
+import path from "path";
 
 import routes from "./routes/routes.js";
 
 const app = express();
+
 dotenv.config();
 app.use(cors());
 app.use(
@@ -35,6 +38,7 @@ app.use(flash());
 
 // Enable body parser
 app.use(express.json());
+// app.use(bodyParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/public", express.static("public"));
@@ -45,11 +49,11 @@ app.set("view engine", "hbs");
 const PORT = process.env.PORT || 5000;
 const connectionURL = process.env.MONGODB_URL;
 
-// app.get("/", (req, res) => {
-//   res.send("Welcome...");
-// });
-
 app.use("/", routes);
+
+// app.listen(PORT, () => {
+//   console.log(` server started on port http://localhost:${PORT} `);
+// });
 
 mongoose
   .connect(connectionURL, { useNewUrlParser: true, useUnifiedTopology: true })

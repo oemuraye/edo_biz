@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { logout } from "../controllers/user.js";
 
 export const auth = async (req, res, next) => {
   try {

@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
+  id: {
+    type: String,
+  },
   name: {
     type: String,
     required: true,
@@ -14,8 +17,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  id: {
+  profile_pic: {
     type: String,
+    required: true,
   },
   hasPaid: {
     type: Boolean,

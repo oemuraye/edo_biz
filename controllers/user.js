@@ -1,73 +1,136 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import multer from "multer";
 
+import path from "path";
 import User from '../models/user.js';
 
-export const register = async (req, res) => {
-  const {
-    first_name,
-    last_name,
-    email,
-    password,
-    confirm_password,
-  } = req.body;
-  const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  const errors = [];
+const img_storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/uploads/");
+  },
+  filename: function (req, file, cb) {
+    // const uniqueSuffix = Date.now();
+    // cb(null, uniqueSuffix + "_" + file.originalname);
+    cb(null, file.originalname);
+  },
+});
 
-  const existingUser = await User.findOne({ email });
+export const upload = multer({
+  storage: img_storage,
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
+}).single("avatar");
 
+// Check File Type
+function checkFileType(file, cb) {
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
 
-  // Check required fields
-  if (
-    !first_name ||
-    !last_name ||
-    !email ||
-    !password ||
-    !confirm_password
-  ) {
-    errors.push("Please fill in all fields");
-  }
-
-  // Check email
-  if (!email.match(validRegex)) {
-    errors.push("Use a valid Email address");
-  }
-  // Check password match
-  if (password !== confirm_password) {
-    errors.push("Password does not match");
-  }
-  // Check password length
-  if (password.length < 6) {
-    errors.push("Password should be at least 6 character");
-  }
-  // Check if email already exists
-  if (existingUser) {
-    errors.push("A User with this email already exists");
-  }
-
-  
-  
-  if (errors.length > 0) {
-    req.flash("error", errors);
-    req.flash("formData", { first_name, last_name, email });
-    res.redirect("/register");
+  if (mimetype && extname) {
+    return cb(null, true);
   } else {
+    // errorCb("Invalid file type");
+    // cb(null, false);
+    cb(false);
+  }
+}
 
-    // Save data to database or send email
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const student_data = await User.create({
-      name: `${first_name} ${last_name}`,
+
+export const register = async (req, res) => {
+  try {
+    const {
+      first_name,
+      last_name,
       email,
-      password: hashedPassword,
-    });
+      address,
+      dob,
+      password,
+      confirm_password,
+    } = req.body;
+    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const errors = [];
 
-    const token = jwt.sign({ student_data }, process.env.JWT_SECRET, { expiresIn: "1hr" });
-    console.log(token);
-    req.flash("success_msg", "You are now registered and can log in");
-    req.flash("formData", { email });
-    res.redirect("/login");
+    const existingUser = await User.findOne({ email });
 
-    // res.redirect("success");
+    // Check required fields
+    if (
+      !first_name ||
+      !last_name ||
+      !email ||
+      !address ||
+      !dob ||
+      !password ||
+      !confirm_password
+    ) {
+      errors.push("Please fill in all fields");
+    }
+
+    // Check email
+    if (!email.match(validRegex)) {
+      errors.push("Use a valid Email address");
+    }
+    // Check password match
+    if (password !== confirm_password) {
+      errors.push("Password does not match");
+    }
+    // Check password length
+    if (password.length < 6) {
+      errors.push("Password should be at least 6 character");
+    }
+    // Check if email already exists
+    if (existingUser) {
+      errors.push("A User with this email already exists");
+    }
+
+    if (errors.length > 0) {
+      req.flash("error", errors);
+      req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password });
+      res.redirect("/register");
+    } else {
+      upload(req, res, async (err) => {
+        const maxSize = 1000000; // 1MB
+        if (!req.file){
+          // Handle error if req.file does not exist
+          req.flash("error", "Upload an image");
+          req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password });
+          res.redirect("/register");
+        } else if (req.file.size > maxSize) {
+          // A Multer error occurred when uploading
+          req.flash("error", "Image size exceeds 1mb");
+          req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password });
+          res.redirect("/register");
+        } else if (err instanceof multer.MulterError && err.code === "Invalid file type") {
+          // A Multer error occurred when uploading
+          req.flash("error", "Image");
+          req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password });
+          res.redirect("/register");
+        } else {
+          // No errors occurred when uploading
+          const hashedPassword = await bcrypt.hash(password, 10);
+          await User.create({
+            name: `${first_name} ${last_name}`,
+            email,
+            password: hashedPassword,
+            profile_pic: req.file.filename,
+          });
+          req.flash("success_msg", "You are now registered and can log in");
+          req.flash("formData", { email });
+          res.redirect("/login");
+        }
+      });
+    }
+  } catch (error) {
+    // Handle database error
+    console.error(error);
+    req.flash("error", "An error occurred while registering the user");
+    req.flash("formData", { first_name, last_name, email, address, dob });
+    res.redirect("/register");
   }
 };
 
