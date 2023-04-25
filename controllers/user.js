@@ -163,39 +163,41 @@ export const signin = async (req, res) => {
   
     const existingUser = await User.findOne({ email });
     const errors = [];
-
-    // Check required fields
-    if (!email || !password ) {
-      errors.push("Please fill in all fields");
-    }
-    if (!existingUser) {
-      errors.push("User does not exist");
-    }
-
-    if (errors.length > 0) {
-      req.flash("error", errors);
-      req.flash("formData", { email });
-      res.redirect("/login");
-    } else {
-      const isPasswordCorrect = await bcrypt.compare(
-        password,
-        existingUser.password
-      );
-  
-      if (!isPasswordCorrect) {
-        errors.push("Password is not correct");
+    try {
+      // Check required fields
+      if (!email || !password ) {
+        errors.push("Please fill in all fields");
       }
-  
-      const token = jwt.sign({ existingUser }, "edobiz", { expiresIn: "1hr" });
-      const student_data = existingUser
+      if (!existingUser) {
+        errors.push("User does not exist");
+      }
 
-      req.session.user = student_data;
-      req.session.token = token;
-      res.status(200).redirect("/dashboard");
-    }
-  // } catch (error) {
-  //   res.status(500).render({ message: "Something went wrong." });
-  // }
+      if (errors.length > 0) {
+        req.flash("error", errors);
+        req.flash("formData", { email });
+        res.redirect("/login");
+      } else {
+        const isPasswordCorrect = await bcrypt.compare(
+          password,
+          existingUser.password
+        );
+    
+        if (!isPasswordCorrect) {
+          errors.push("Password is not correct");
+        }
+    
+        const token = jwt.sign({ existingUser }, "edobiz", { expiresIn: "1hr" });
+        const student_data = existingUser
+
+        req.session.user = student_data;
+        req.session.token = token;
+        res.status(200).redirect("/dashboard");
+      }
+  } catch (error) {
+    req.flash("error", "An error occurred while registering");
+    req.flash("formData", { email });
+    res.redirect("/login");
+  }
 };
 
 export const logout = (req, res) => {
