@@ -58,7 +58,7 @@
         <span id="title1" class="padding-bottom--15"></span>
 
         <div id="login-root">
-          <form id="btn1" action="/signup" method="post" enctype="multipart/form-data" class="row gy-3">
+          <form id="btn1" action="/boot_reg" method="post" class="row gy-3">
             {{> flash}}
             <div class="form-group col-md-6">
               <label for="first_name">First Name</label>
@@ -79,22 +79,13 @@
               />
             </div>
 
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
               <label for="email">Email address</label>
               <input
                 type="email"
                 class="form-control"
                 value="{{formData.email}}"
                 name="email" required
-              />
-            </div>
-            <div class="form-group col-md-6">
-              <label for="dob">Date of Birth</label>
-              <input
-                type="date"
-                class="form-control"
-                value="{{formData.dob}}"
-                name="dob" required
               />
             </div>
             <div class="form-group col-md-6">
@@ -107,88 +98,46 @@
               />
             </div>
             <div class="form-group col-md-12">
-              <label for="address">Address</label>
+              <label for="gender">Gender</label><br>
+              <label for="male">Male</label>
+              <input type="radio" name="gender" value="male" />
+              <label for="female" class="ms-3">Female</label>
+              <input type="radio" name="gender" value="female"/>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="dob">Date of Birth</label>
               <input
-                type="text"
+                type="date"
                 class="form-control"
-                value="{{formData.address}}"
-                name="address" required
+                value="{{formData.dob}}"
+                name="dob" required
               />
             </div>
             <div class="form-group col-md-6">
-              <label for="first_name">Password</label>
+              <label for="location">Location</label>
               <input
-                type="password"
+                type="tel"
                 class="form-control"
-                name="password"
-                value="{{formData.password}}" required
-              />
-            </div>
-            <div class="form-group col-md-6">
-              <label for="first_name">Confirm Password</label>
-              <input
-                type="password"
-                class="form-control"
-                name="confirm_password"
-                value="{{formData.confirm_password}}" required
+                value="{{formData.location}}"
+                name="location" required
               />
             </div>
             <div class="form-group col-md-12">
-              <label for="address">Image</label>
-              <input
-                type="file"
-                class="form-control"
-                value="{{formData.profile_image}}"
-                name="avatar" required
-              />
-            </div>
-            <div class="form-group col-md-12">
-              <label for="address">Academic Qualifications</label>
-              <select class="form-control" name="academic_qualification" required>
-                <option value="none"></option>
-                <option value="First_School_Leaving_Certificate">First School Leaving Certificate</option>
-                <option value="Senior_Secondary_School_Certificate">Senior Secondary School Certificate</option>
-                <option value="National_Diploma">National Diploma (ND)</option>
-                <option value="Higher_National_Diploma">Higher National Diploma (HND)</option>
-                <option value="Bachelor's_Degree">Bachelor's Degree</option>
-                <option value="Master's_Degree">Master's Degree</option>
-                <option value="PhD">PhD</option>
-              </select>
-            </div>
-            <div class="form-group col-md-12">
-              <label for="course_studied">What did you study</label>
-              <input
-                type="text"
-                class="form-control"
-                value="{{formData.course_studied}}"
-                name="course_studied" required
-              />
-            </div>
-            <div class="form-group col-md-12">
-              <label for="school_studied">Institute/School of Study</label>
-              <input
-                type="text"
-                class="form-control"
-                value="{{formData.school_studied}}"
-                name="school_studied" required
-              />
-            </div>
-            <div class="form-group col-md-12">
-              <label for="reason_for_apply">Why do you want to study Data Analysis/ Product Management?</label>
+              <label for="professional_background">Tell us a little bit more about yourself, professional background and experience.</label>              
               <textarea
                 type="text"
                 class="form-control"
-                value="{{formData.reason_for_apply}}"
-                name="reason_for_apply" required
+                value="{{formData.professional_background}}"
+                name="professional_background" required
               ></textarea>
             </div>
             <div class="form-group col-md-12">
-              <label for="career_progression">What are your career progression?</label>
+              <label for="why_join_camp">What inspired you to join the boot-camp</label>
               <textarea
                 type="text"
                 class="form-control"
-                value="{{formData.career_progression}}"
-                name="career_progression" required
+                value="{{formData.why_join_camp}}"
+                name="why_join_camp" required
               ></textarea>
             </div>
 

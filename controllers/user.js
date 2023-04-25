@@ -1,9 +1,10 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import multer from "multer";
-
 import path from "path";
+
 import User from '../models/user.js';
+import BootcampUser from '../models/bootcamp.js';
 
 const img_storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -205,4 +206,69 @@ export const logout = (req, res) => {
     req.session?.destroy();
   }
   res.redirect("/");
+}
+
+// export const bootcamp_reg = (req, res) => {
+//   console.log(req.body);
+// }
+export const bootcamp_reg = async (req, res) => {
+  const {
+    first_name,
+    last_name,
+    email,
+    contact,
+    gender,
+    dob,
+    location,
+    professional_background,
+    why_join_camp
+  } = req.body;
+
+  try {
+    const existingUser = await BootcampUser.findOne({ email });
+    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const errors = [];
+
+    if (!first_name || !last_name || !email || !contact || !dob, !location, !professional_background, !why_join_camp ) {
+      errors.push("Please fill in all fields");
+    }
+
+    if (!gender) {
+      errors.push("Please select gender");
+    }
+
+    if (!email.match(validRegex)) {
+      errors.push("Use a valid Email address");
+    }
+
+    // Check if email already exists
+    if (existingUser) {
+      errors.push("A User with this email already exists");
+    }
+
+    if (errors.length > 0) {
+      req.flash("error", errors);
+      req.flash("formData", { first_name, last_name, email, contact, dob, gender, location, professional_background, why_join_camp });
+      res.redirect("/form");
+    } else {
+      await BootcampUser.create({
+        name: `${first_name} ${last_name}`,
+        email,
+        date_of_birth: dob,
+        contact,
+        gender,
+        location,
+        professional_background,
+        why_join_camp,
+      });
+      req.flash("success_msg", "You are now registered");
+      res.redirect("/form");
+    }
+  } catch (error) {
+     // Handle database error
+    console.error(error);
+    req.flash("error", "An error occurred while registering");
+    req.flash("formData", {  first_name, last_name, email, contact, dob, gender, location, professional_background, why_join_camp });
+    res.redirect("/form");
+  }
 }

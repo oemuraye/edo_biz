@@ -1,9 +1,9 @@
 import express from "express";
 import multer from "multer";
 
-import { aboutPage, blogPage, blogSinglePage, contactPage, detailPage, errorPage, faqPage, formPage, homePage, innerPage, loginPage, portfolioDetailsPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
+import { aboutPage, blogPage, blogSinglePage, bootcampForm, contactPage, detailPage, errorPage, faqPage, homePage, innerPage, loginPage, portfolioDetailsPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
 import { feedback } from "../controllers/mailings.js";
-import { logout, register, signin, upload } from "../controllers/user.js";
+import { bootcamp_reg, logout, register, signin, upload } from "../controllers/user.js";
 import { get_payment_receipt, paystack_init_payment, paystack_verify_payment } from "../controllers/payment.js";
 import { checkToken } from "../middleware/auth.js";
 
@@ -20,7 +20,6 @@ router.get("/blog", blogPage);
 router.get("/contact", contactPage);
 router.get("/detail", detailPage);
 router.get("/faq", faqPage);
-// router.get("/form", formPage);
 router.get("/inner-page", innerPage);
 router.get("/portfolio-details", portfolioDetailsPage);
 router.get("/program", programPage);
@@ -31,6 +30,7 @@ router.get("/team", teamPage);
 router.get("/dashboard", checkToken, student_dashboard);
 router.get("/login", loginPage);
 router.get("/register", registerPage);
+router.get("/form", bootcampForm);
 
 // Feedback-contact mailing
 router.post("/feedback", feedback);
@@ -39,6 +39,9 @@ router.post("/feedback", feedback);
 router.post("/signin", signin);
 router.post("/signup", upload, register);
 router.get("/logout", logout);
+
+// Registration of bootcamp Student
+router.post("/boot_reg", bootcamp_reg);
 
 //Make Payments
 router.post("/paystack_pay", paystack_init_payment)

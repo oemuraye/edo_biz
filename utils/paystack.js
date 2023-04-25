@@ -4,7 +4,7 @@ dotenv.config();
 
 export const paystack = (request) => {
   const headers = {
-    authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
+    Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
     "content-type": "application/json",
     "cache-control": "no-cache",
   };

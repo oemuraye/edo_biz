@@ -21,6 +21,7 @@ export const paystack_init_payment = (req, res) => {
     const response = JSON.parse(body);
 
     if (response.status === false) {
+      console.log(response);
       return res.status(400).redirect("error");
     } else {
       return res.status(200).redirect(`${response.data.authorization_url}?reference=${response.data.reference}`);
@@ -49,23 +50,6 @@ export const paystack_verify_payment = (req, res) => {
       await student_data.save();
       return res.status(200).send("paid");
     }
-    
-
-    // const [reference, amount, email, fullName] = data;
-
-    // const donor = new Donor({ reference, amount, email, fullName });
-
-    // donor
-    //   .save()
-    //   .then((donor) => {
-    //     if (!donor) {
-    //       return res.redirect("error");
-    //     }
-    //     res.redirect("/receipt/" + donor._id);
-    //   })
-    //   .catch((e) => {
-    //     res.redirect("error");
-    //   });
   });
 };
 

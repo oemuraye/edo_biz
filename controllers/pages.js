@@ -41,12 +41,6 @@ export const faqPage = (req, res) => {
     res.render('faq', { title: "FAQ" , student_data, token})
 }
 
-export const formPage = (req, res) => {
-    const student_data = req.session.user;
-    const token = req.session.token;
-    res.render('form', { title: "Form" , student_data, token})
-}
-
 export const innerPage = (req, res) => {
     const student_data = req.session.user;
     const token = req.session.token;
@@ -97,6 +91,15 @@ export const student_dashboard = (req, res) => {
         res.render("student_dashboard", { title: "Dashboard", student_data, token });
     }
 }
+
+export const bootcampForm = (req, res) => {
+  const errors = req.flash("error");
+  const success_msg = req.flash("success_msg");
+  const formData = req.flash("formData")[0];
+  res.render("register_bootcamp", { title: "Form", errors, formData, success_msg });
+};
+
+
 
 export const registerPage = (req, res) => {
     const errors = req.flash("error");
