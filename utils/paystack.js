@@ -23,9 +23,7 @@ export const paystack = (request) => {
 
   const verifyPayment = (ref, mycallback) => {
     const options = {
-      url: `${
-        process.env.PAYSTACK_BASE_URL
-      }/transaction/verify/${encodeURIComponent(ref)}`,
+      url: `${process.env.PAYSTACK_BASE_URL}/transaction/verify/${encodeURIComponent(ref)}`,
       headers,
     };
     const callback = (error, response, body) => {

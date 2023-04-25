@@ -322,7 +322,7 @@ pay_btn.addEventListener('click', async () => {
 
     setTimeout(() => {
       verify_payment(student_ref);
-    }, 10000);
+    }, 20000);
     
   } catch (error) {
     console.log(error);

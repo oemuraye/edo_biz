@@ -208,9 +208,6 @@ export const logout = (req, res) => {
   res.redirect("/");
 }
 
-// export const bootcamp_reg = (req, res) => {
-//   console.log(req.body);
-// }
 export const bootcamp_reg = async (req, res) => {
   const {
     first_name,
@@ -261,7 +258,7 @@ export const bootcamp_reg = async (req, res) => {
         professional_background,
         why_join_camp,
       });
-      req.flash("success_msg", "You are now registered");
+      req.flash("success_msg", `${last_name} Congratulations! you are now registered`);
       res.redirect("/form");
     }
   } catch (error) {
