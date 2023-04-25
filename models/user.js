@@ -21,42 +21,44 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  date_of_birth: {
+    type: String,
+    required: true,
+  },
   hasPaid: {
     type: Boolean,
   },
   payment_ref: {
     type: String,
   },
-  // profile_pic: {
-  //   type: String,
-  // },
-  // address: {
-  //   type: String,
-  //   required: true,
-  // },
-  // contact: {
-  //   type: Number,
-  //   required: true,
-  // },
-  // qualifications: {
-  //   type: String,
-  // },
-  // field_of_study: {
-  //   type: String,
-  //   required: true,
-  // },
-  // institution_of_study: {
-  //   type: String,
-  //   required: true,
-  // },
-  // reasons_for_data_analysis: {
-  //   type: String,
-  //   required: true,
-  // },
-  // career_progression: {
-  //   type: String,
-  //   required: true,
-  // },
+  address: {
+    type: String,
+    required: true,
+  },
+  contact: {
+    type: Number,
+    required: true,
+  },
+  academic_qualification: {
+    type: String,
+    require: true,
+  },
+  course_studied: {
+    type: String,
+    required: true,
+  },
+  institution_of_study: {
+    type: String,
+    required: true,
+  },
+  reasons_for_data_analysis_study: {
+    type: String,
+    required: true,
+  },
+  career_progression: {
+    type: String,
+    required: true,
+  },
 });
 
 export default mongoose.model("User", userSchema);

@@ -10,9 +10,9 @@ const img_storage = multer.diskStorage({
     cb(null, "./public/uploads/");
   },
   filename: function (req, file, cb) {
-    // const uniqueSuffix = Date.now();
-    // cb(null, uniqueSuffix + "_" + file.originalname);
-    cb(null, file.originalname);
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + "_" + file.originalname);
+    // cb(null, file.originalname);
   },
 });
 
@@ -48,10 +48,16 @@ export const register = async (req, res) => {
       first_name,
       last_name,
       email,
-      address,
       dob,
+      contact,
+      address,
       password,
       confirm_password,
+      academic_qualification,
+      course_studied,
+      school_studied,
+      reason_for_apply,
+      career_progression
     } = req.body;
     const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const errors = [];
@@ -65,10 +71,20 @@ export const register = async (req, res) => {
       !email ||
       !address ||
       !dob ||
+      !contact ||
       !password ||
-      !confirm_password
+      !confirm_password ||
+      !course_studied ||
+      !school_studied ||
+      !reason_for_apply ||
+      !career_progression
+      
     ) {
       errors.push("Please fill in all fields");
+    }
+
+    if (academic_qualification === "none") {
+      errors.push("Select an academic qualification");
     }
 
     // Check email
@@ -90,7 +106,7 @@ export const register = async (req, res) => {
 
     if (errors.length > 0) {
       req.flash("error", errors);
-      req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password });
+      req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password, contact, course_studied, school_studied, reason_for_apply, career_progression });
       res.redirect("/register");
     } else {
       upload(req, res, async (err) => {
@@ -98,17 +114,17 @@ export const register = async (req, res) => {
         if (!req.file){
           // Handle error if req.file does not exist
           req.flash("error", "Upload an image");
-          req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password });
+          req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password, contact, course_studied, school_studied, reason_for_apply, career_progression });
           res.redirect("/register");
         } else if (req.file.size > maxSize) {
           // A Multer error occurred when uploading
           req.flash("error", "Image size exceeds 1mb");
-          req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password });
+          req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password, contact, course_studied, school_studied, reason_for_apply, career_progression });
           res.redirect("/register");
         } else if (err instanceof multer.MulterError && err.code === "Invalid file type") {
           // A Multer error occurred when uploading
           req.flash("error", "Image");
-          req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password });
+          req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password, contact, course_studied, school_studied, reason_for_apply, career_progression });
           res.redirect("/register");
         } else {
           // No errors occurred when uploading
@@ -117,7 +133,15 @@ export const register = async (req, res) => {
             name: `${first_name} ${last_name}`,
             email,
             password: hashedPassword,
+            contact,
+            date_of_birth: dob,
+            address,
             profile_pic: req.file.filename,
+            academic_qualification,
+            course_studied,
+            institution_of_study: school_studied,
+            reasons_for_data_analysis_study: reason_for_apply,
+            career_progression
           });
           req.flash("success_msg", "You are now registered and can log in");
           req.flash("formData", { email });
@@ -128,8 +152,8 @@ export const register = async (req, res) => {
   } catch (error) {
     // Handle database error
     console.error(error);
-    req.flash("error", "An error occurred while registering the user");
-    req.flash("formData", { first_name, last_name, email, address, dob });
+    req.flash("error", "An error occurred while registering");
+    req.flash("formData", { first_name, last_name, email, address, dob, password, confirm_password, contact, course_studied, school_studied, reason_for_apply, career_progression });
     res.redirect("/register");
   }
 };

@@ -44,11 +44,11 @@
       <div class="col-lg-4">
         <div class="card shadow-sm">
           <div class="card-header bg-transparent text-center">
-            <img class="profile_img" src="https://placeimg.com/640/480/arch/any" alt="">
+            <img class="profile_img" src="/public/uploads/{{student_data.profile_pic}}" alt="">
             <h3 class="student-name">{{student_data.name}}</h3>
           </div>
           <div class="card-body">
-            <p class="mb-0"><strong class="pr-1">Student ID: </strong>321000001</p>
+            <p class="mb-0"><strong class="pr-1">Email: </strong>{{student_data.email}}</p>
             <p class="mb-0"><strong class="pr-1">Class: </strong>4</p>
             <p class="mb-0"><strong class="pr-1">Section: </strong>A</p>
           </div>
@@ -62,29 +62,29 @@
           <div class="card-body pt-0">
             <table class="table table-bordered">
               <tr>
-                <th width="30%">Email</th>
+                <th width="30%">Date of Birth</th>
                 <td width="2%">:</td>
-                <td class="student-email">{{student_data.email}}</td>
-              </tr>
-              <tr>
-                <th width="30%">Fee (&#8358;)</th>
-                <td width="2%">:</td>
-                <td class="course-fee">10000</td>
+                <td class="student-email">{{student_data.date_of_birth}}</td>
               </tr>
               <tr>
                 <th width="30%">Academic Year	</th>
                 <td width="2%">:</td>
                 <td>2020</td>
               </tr>
-              <tr>
+              {{!-- <tr>
                 <th width="30%">Gender</th>
                 <td width="2%">:</td>
                 <td>Male</td>
-              </tr>
+              </tr> --}}
               <tr>
                 <th width="30%">Course</th>
                 <td width="2%">:</td>
                 <td>Web Development</td>
+              </tr>
+              <tr>
+                <th width="30%">Fee (&#8358;)</th>
+                <td width="2%">:</td>
+                <td class="course-fee">10000</td>
               </tr>
               {{#if student_data.hasPaid}}
                 <tr>
@@ -99,6 +99,11 @@
                   <td><span id="pay-btn" class="btn btn-sm btn-success">Make Payment</span></td>
                 </tr>
               {{/if}}
+                <tr>
+                  <th width="30%">Your Goal</th>
+                  <td width="2%">:</td>
+                  <td>{{student_data.career_progression}}</td>
+                </tr>
             </table>
           </div>
         </div>

@@ -7,7 +7,7 @@
   .formbg { 
     margin: 0px auto; 
     width: 100%; 
-    max-width: 448px; 
+    max-width: 500px; 
     background: white;
     border-radius: 4px; 
     box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px; } span { 
@@ -21,7 +21,7 @@
     justify-content: center;
   } 
   .padding-horizontal--48 { 
-    padding: 48px; 
+    padding: 20px; 
   } 
   .padding-bottom--15 {
     padding-bottom: 15px; 
@@ -58,7 +58,7 @@
         <span id="title1" class="padding-bottom--15"></span>
 
         <div id="login-root">
-          <form id="btn1" action="/signup" method="post" enctype="multipart/form-data" class="row gy-2">
+          <form id="btn1" action="/signup" method="post" enctype="multipart/form-data" class="row gy-3">
             {{> flash}}
             <div class="form-group col-md-6">
               <label for="first_name">First Name</label>
@@ -88,13 +88,22 @@
                 name="email"
               />
             </div>
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6">
               <label for="dob">Date of Birth</label>
               <input
                 type="date"
                 class="form-control"
                 value="{{formData.dob}}"
                 name="dob"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="contact">Contact</label>
+              <input
+                type="tel"
+                class="form-control"
+                value="{{formData.contact}}"
+                name="contact"
               />
             </div>
             <div class="form-group col-md-12">
@@ -128,6 +137,57 @@
                 name="avatar"
               />
             </div>
+            <div class="form-group col-md-12">
+              <label for="address">Academic Qualifications</label>
+              <select class="form-control" name="academic_qualification">
+                <option value="none"></option>
+                <option value="First_School_Leaving_Certificate">First School Leaving Certificate</option>
+                <option value="Senior_Secondary_School_Certificate">Senior Secondary School Certificate</option>
+                <option value="National_Diploma">National Diploma (ND)</option>
+                <option value="Higher_National_Diploma">Higher National Diploma (HND)</option>
+                <option value="Bachelor's_Degree">Bachelor's Degree</option>
+                <option value="Master's_Degree">Master's Degree</option>
+                <option value="PhD">PhD</option>
+              </select>
+            </div>
+            <div class="form-group col-md-12">
+              <label for="course_studied">What did you study</label>
+              <input
+                type="text"
+                class="form-control"
+                value="{{formData.course_studied}}"
+                name="course_studied"
+              />
+            </div>
+            <div class="form-group col-md-12">
+              <label for="school_studied">Institute/School of Study</label>
+              <input
+                type="text"
+                class="form-control"
+                value="{{formData.school_studied}}"
+                name="school_studied"
+              />
+            </div>
+            <div class="form-group col-md-12">
+              <label for="reason_for_apply">Why do you want to study Data Analysis/ Product Management?</label>
+              <textarea
+                type="text"
+                class="form-control"
+                value="{{formData.reason_for_apply}}"
+                name="reason_for_apply"
+              ></textarea>
+            </div>
+            <div class="form-group col-md-12">
+              <label for="career_progression">What are your career progression?</label>
+              <textarea
+                type="text"
+                class="form-control"
+                value="{{formData.career_progression}}"
+                name="career_progression"
+              ></textarea>
+            </div>
+
+
             <div class="form-group col-md-12 mt-3">
               <button type="submit" class="btn w-100">Submit</button>
             </div>

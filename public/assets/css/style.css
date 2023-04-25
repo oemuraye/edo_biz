@@ -331,7 +331,8 @@ section {
   top: 55px;
   right: 15px;
   bottom: 15px;
-  left: 15px;
+  /* left: 15px; */
+  width: 175px;
   padding: 10px 0;
   border-radius: 10px;
   background-color: #fff;

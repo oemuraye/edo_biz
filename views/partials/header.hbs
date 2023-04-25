@@ -1,7 +1,7 @@
   <style>
     /* Dropdown Button */
 .dropbtn {
-  color: #218e0b !important;
+  color: #24133D !important;
   font-size: 20px;
   border: none;
 }
@@ -35,6 +35,11 @@
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
 
+.user-pic {
+  border-radius: 50%;
+  border: 5px solid #c0c0c0;
+}
+
 </style>
 
 
@@ -65,7 +70,7 @@
           {{#student_data}}
             <li>
               <div class="dropdown">
-                <a class="dropbtn">{{email}} <i class="fa fa-arrow-down " aria-hidden="true"></i> </a>
+                <a class="dropbtn"><img class="user-pic" src="/public/uploads/{{profile_pic}}" height="50px" width="50px" alt="{{student_data.profile_pic}}"> <i class="fa fa-arrow-down " aria-hidden="true"></i> </a>
                 <div class="dropdown-content">
                   <a href="dashboard">Dashboard</a>
                   <a href="logout">Logout</a>
