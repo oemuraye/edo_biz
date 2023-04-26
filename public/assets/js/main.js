@@ -340,7 +340,7 @@ let myTimeout;
 if (document.querySelector(".payment-ref")) {
   myTimeout = setTimeout(() => {
     verify_payment();
-  }, 10000);
+  }, 5000);
 }
 const verify_payment = async () => {
   const ref = document.querySelector(".payment-ref").innerHTML;
@@ -350,12 +350,11 @@ const verify_payment = async () => {
     const response = await fetch(`/paystack/callback/${ref}`);
 
     if (!response.ok) {
-      // throw new Error("Transaction was not found");
       console.log(response);
     } else {
       clearTimeout(myTimeout)
       payment_div.innerHTML = `<span class="text-success">Paid <i class="fa fa-check-circle" aria-hidden="true"></i></span>`;
-      console.log(response);
+      // console.log(response);
     }
   } catch (error) {
     console.log(error);
