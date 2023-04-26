@@ -29,9 +29,9 @@ export const paystack_init_payment = (req, res) => {
   });
 };
 
-export const paystack_verify_payment = (query) => {
-    const { ref } = query;
-    console.log(ref);
+export const paystack_verify_payment = (req, res) => {
+  const ref = req.params.id;
+  // const email = req.query.email;
   try {
       
     verifyPayment(ref, async (error, body) => {

@@ -319,22 +319,21 @@ pay_btn.addEventListener('click', async () => {
     const paystack_url = new URL(response.url);
     const search_params = new URLSearchParams(paystack_url.search);
     const student_ref = search_params.get("reference");
-
-    // setTimeout(() => {
-    //   console.log("hey");
-    //   verify_payment(student_ref);
-    // }, 9000);
     
   } catch (error) {
     console.log(error);
   }
 });
 
-
- const verify_payment = async (student_ref) => {
+if (document.querySelector('.payment-ref')) {
+  verify_payment();
+}
+ const verify_payment = async () => {
+  const ref = document.querySelector('.payment-ref').innerHTML;
+  // const email = document.querySelector('.payment-email').innerHTML;
   
   try {
-    const response = await fetch(`/paystack/callback/${student_ref}`);
+    const response = await fetch(`/paystack/callback/${ref}`);
 
     if (!response.ok) {
       // throw new Error("Transaction was not found");
