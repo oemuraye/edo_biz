@@ -30,7 +30,7 @@ export const paystack_init_payment = (req, res) => {
 };
 
 export const paystack_verify_payment = (query) => {
-    const { ref } = query.reference;
+    const { ref } = query;
     console.log(ref);
   try {
       
