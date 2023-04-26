@@ -87,7 +87,7 @@ export const teamPage = (req, res) => {
 export const student_dashboard = (req, res) => {
   const student_data = req.session.user;
   const token = req.session.token;
-  const query = req.query;
+  const query = req.query.reference;
 
   if (typeof query !== "undefined" && Object.keys(query).length > 0) {
     // paystack_verify_payment(query);
