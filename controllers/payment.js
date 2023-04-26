@@ -30,32 +30,37 @@ export const paystack_init_payment = (req, res) => {
 };
 
 export const paystack_verify_payment = (query) => {
-  // Split the query string into an array of key-value pairs
-  const queryParams = query.split("&");
-
-  const referenceParam = queryParams.find((param) => param.startsWith("reference=")).split("=");
-
-  const ref = referenceParam[1];
-
-  verifyPayment(ref, async (error, body) => {
-    if (error) {
-      return res.redirect("error");
-    }
+    const queryParams = query.split("&");
+  try {
     
-    const response = JSON.parse(body);
-    
-    const email = response.data.customer.email;
-    const student_data = await User.findOne({ email });
-    
-    if (response.status === false) {
-      return res.status(400).send("error");
-    } else {
-      student_data.hasPaid = true;
-      student_data.payment_ref = ref;
-      await student_data.save();
-      return res.status(200).send("paid");
-    }
-  });
+    // Split the query string into an array of key-value pairs
+  
+    const referenceParam = queryParams.find((param) => param.startsWith("reference=")).split("=");
+  
+    const ref = referenceParam[1];
+  
+    verifyPayment(ref, async (error, body) => {
+      if (error) {
+        return res.redirect("error");
+      }
+      
+      const response = JSON.parse(body);
+      
+      const email = response.data.customer.email;
+      const student_data = await User.findOne({ email });
+      
+      if (response.status === false) {
+        return res.status(400).send("error");
+      } else {
+        student_data.hasPaid = true;
+        student_data.payment_ref = ref;
+        await student_data.save();
+        return res.status(200).send("paid");
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const get_payment_receipt = (req, res) => {
