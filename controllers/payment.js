@@ -43,6 +43,7 @@ export const paystack_verify_payment = (req, res) => {
       
       const email = response.data.customer.email;
       const student_data = await User.findOne({ email });
+      console.log(student_data);
       
       if (response.status === false) {
         return res.status(400).send("error");

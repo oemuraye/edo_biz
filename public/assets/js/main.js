@@ -330,17 +330,15 @@ pay_btn.addEventListener("click", async () => {
     } else {
       window.location.href = response.url.split("?")[0];
     }
-
-    const paystack_url = new URL(response.url);
-    const search_params = new URLSearchParams(paystack_url.search);
-    const student_ref = search_params.get("reference");
   } catch (error) {
     console.log(error);
   }
 });
 
+let myTimeout;
+
 if (document.querySelector(".payment-ref")) {
-  setTimeout(() => {
+  myTimeout = setTimeout(() => {
     verify_payment();
   }, 10000);
 }
@@ -355,6 +353,7 @@ const verify_payment = async () => {
       // throw new Error("Transaction was not found");
       console.log(response);
     } else {
+      clearTimeout(myTimeout)
       console.log(response);
       // window.location(response.url);
     }

@@ -89,11 +89,6 @@ export const student_dashboard = (req, res) => {
   const token = req.session.token;
   const query = req.query.reference;
 
-  if (typeof query !== "undefined" && Object.keys(query).length > 0) {
-    // paystack_verify_payment(query);
-    console.log(query);
-  }
-
   if (!token) {
     res.render("login");
   } else {
