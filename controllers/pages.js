@@ -88,6 +88,7 @@ export const student_dashboard = (req, res) => {
   const student_data = req.session.user;
   const token = req.session.token;
   const query = req.params;
+  console.log(query);
 
   if (typeof query === "string") {
     paystack_verify_payment(query);
