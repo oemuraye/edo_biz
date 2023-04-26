@@ -307,7 +307,7 @@
 // Payment with paystack
 const pay_btn = document.querySelector("#pay-btn");
 
-pay_btn.addEventListener("click", async () => {
+pay_btn?.addEventListener("click", async () => {
   const name = document.querySelector(".student-name");
   const email = document.querySelector(".student-email");
   const amount = document.querySelector(".course-fee");
