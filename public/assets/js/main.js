@@ -344,7 +344,7 @@ if (document.querySelector(".payment-ref")) {
 }
 const verify_payment = async () => {
   const ref = document.querySelector(".payment-ref").innerHTML;
-  // const email = document.querySelector('.payment-email').innerHTML;
+  const payment_div = document.querySelector('.payment-check');
 
   try {
     const response = await fetch(`/paystack/callback/${ref}`);
@@ -354,8 +354,8 @@ const verify_payment = async () => {
       console.log(response);
     } else {
       clearTimeout(myTimeout)
+      payment_div.innerHTML = `<span class="text-success">Paid <i class="fa fa-check-circle" aria-hidden="true"></i></span>`;
       console.log(response);
-      // window.location(response.url);
     }
   } catch (error) {
     console.log(error);
