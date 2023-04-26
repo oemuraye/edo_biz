@@ -87,7 +87,7 @@ export const teamPage = (req, res) => {
 export const student_dashboard = (req, res) => {
   const student_data = req.session.user;
   const token = req.session.token;
-  const query = req.params;
+  const query = req.query;
   console.log(query);
 
   if (typeof query === "string") {
