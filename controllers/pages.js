@@ -1,3 +1,5 @@
+import { paystack_verify_payment } from "./payment.js";
+
 export const homePage = (req, res) => {
     const student_data = req.session.user;
     const token = req.session.token;
@@ -83,13 +85,23 @@ export const teamPage = (req, res) => {
 }
 
 export const student_dashboard = (req, res) => {
-    const student_data = req.session.user;
-    const token = req.session.token;
-    if (!token) {
-        res.render("login");
-    } else {
-        res.render("student_dashboard", { title: "Dashboard", student_data, token });
-    }
+  const student_data = req.session.user;
+  const token = req.session.token;
+  const query = req.params;
+
+  if (query) {
+    paystack_verify_payment(query)
+  }
+
+  if (!token) {
+    res.render("login");
+  } else {
+    res.render("student_dashboard", {
+      title: "Dashboard",
+      student_data,
+      token,
+    });
+  }
 }
 
 export const bootcampForm = (req, res) => {

@@ -320,9 +320,10 @@ pay_btn.addEventListener('click', async () => {
     const search_params = new URLSearchParams(paystack_url.search);
     const student_ref = search_params.get("reference");
 
-    setTimeout(() => {
-      verify_payment(student_ref);
-    }, 10000);
+    // setTimeout(() => {
+    //   console.log("hey");
+    //   verify_payment(student_ref);
+    // }, 9000);
     
   } catch (error) {
     console.log(error);
@@ -336,7 +337,8 @@ pay_btn.addEventListener('click', async () => {
     const response = await fetch(`/paystack/callback/${student_ref}`);
 
     if (!response.ok) {
-      throw new Error("Transaction was not found");
+      // throw new Error("Transaction was not found");
+      console.log(response);
     } else {
       console.log(response);
       // window.location(response.url);

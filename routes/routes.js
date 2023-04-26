@@ -4,7 +4,7 @@ import multer from "multer";
 import { aboutPage, blogPage, blogSinglePage, bootcampForm, contactPage, detailPage, errorPage, faqPage, homePage, innerPage, loginPage, portfolioDetailsPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
 import { feedback } from "../controllers/mailings.js";
 import { bootcamp_reg, logout, register, signin, upload } from "../controllers/user.js";
-import { get_payment_receipt, paystack_init_payment, paystack_verify_payment } from "../controllers/payment.js";
+import { get_payment_receipt, paystack_init_payment } from "../controllers/payment.js";
 import { checkToken } from "../middleware/auth.js";
 
 
@@ -45,7 +45,7 @@ router.post("/boot_reg", bootcamp_reg);
 
 //Make Payments
 router.post("/paystack_pay", paystack_init_payment)
-router.get("/paystack/callback/:id", paystack_verify_payment);
+// router.get("/paystack/callback/:id", paystack_verify_payment);
 router.get("/receipt/:id", get_payment_receipt);
 
 export default router;
