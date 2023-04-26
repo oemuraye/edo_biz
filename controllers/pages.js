@@ -101,6 +101,7 @@ export const student_dashboard = (req, res) => {
       title: "Dashboard",
       student_data,
       token,
+      query
     });
   }
 }
