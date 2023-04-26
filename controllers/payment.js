@@ -30,15 +30,10 @@ export const paystack_init_payment = (req, res) => {
 };
 
 export const paystack_verify_payment = (query) => {
-    const queryParams = query.split("&");
+    const { ref } = query.reference;
+    console.log(ref);
   try {
-    
-    // Split the query string into an array of key-value pairs
-  
-    const referenceParam = queryParams.find((param) => param.startsWith("reference=")).split("=");
-  
-    const ref = referenceParam[1];
-  
+      
     verifyPayment(ref, async (error, body) => {
       if (error) {
         return res.redirect("error");
