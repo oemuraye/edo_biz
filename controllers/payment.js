@@ -31,7 +31,7 @@ export const paystack_init_payment = (req, res) => {
 
 export const paystack_verify_payment = (query) => {
   // Split the query string into an array of key-value pairs
-  const queryParams = queryString.split("&");
+  const queryParams = query.split("&");
 
   const referenceParam = queryParams.find((param) => param.startsWith("reference=")).split("=");
 
