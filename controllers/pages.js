@@ -70,7 +70,8 @@ export const programmePage = (req, res) => {
 export const successPage = (req, res) => {
     const student_data = req.session.user;
     const token = req.session.token;
-    res.render("success", { title: "Success" , student_data, token});
+    const success_msg = req.flash("success_msg");
+    res.render("success", { title: "Success" , student_data, token, success_msg});
 }
 export const errorPage = (req, res) => {
     const student_data = req.session.user;
@@ -108,8 +109,6 @@ export const bootcampForm = (req, res) => {
   res.render("register_bootcamp", { title: "Form", errors, formData, success_msg });
 };
 
-
-
 export const registerPage = (req, res) => {
     const errors = req.flash("error");
     const formData = req.flash("formData")[0];
@@ -122,3 +121,16 @@ export const loginPage = (req, res) => {
     const formData = req.flash("formData")[0];
     res.render("login", { title: "Application", errors, formData, success_msg });
 }
+
+export const passwordRecovery = (req, res) => {
+    const errors = req.flash("error");
+    const formData = req.flash("formData")[0];
+    res.render("passwordRecovery", { title: "Password Recovery", errors, formData });
+};
+
+export const passwordReset = (req, res) => {
+    const errors = req.flash("error");
+    const userId = req.params.userId
+    const token = req.params.token
+    res.render("passwordReset", { title: "Password Reset", errors, userId, token });
+};

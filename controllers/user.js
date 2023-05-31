@@ -2,9 +2,13 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import path from "path";
+import crypto from "crypto";
+import mongoose from "mongoose";
 
 import User from '../models/user.js';
+import Token from '../models/token.js';
 import BootcampUser from '../models/bootcamp.js';
+import { sendEmail } from "../utils/sendEmail.js";
 
 const img_storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -268,4 +272,102 @@ export const bootcamp_reg = async (req, res) => {
     req.flash("formData", {  first_name, last_name, email, contact, dob, gender, location, professional_background, why_join_camp });
     res.redirect("/form");
   }
+}
+
+
+// Password reset
+
+export const sendResetPassword = async (req, res) => {
+  const email = req.body.email
+  
+  try {
+    const user = await User.findOne({ email });
+    const errors = [];
+
+    if (!email) {
+      errors.push("Please fill in the email address");
+    }
+    if (email && !user) {
+      errors.push("There is no user with this email");
+    }
+
+    if (errors.length > 0) {
+      req.flash("error", errors);
+      req.flash("formData", { email });
+      res.redirect("/forgot_password");
+    } else {
+      let token = await Token.findOne({ userId: user._id });
+      if (!token) {
+        token = await new Token({
+          userId: user._id,
+          token: crypto.randomBytes(32).toString("hex"),
+        }).save();
+      }
+
+      const link = `${process.env.BASE_URL}/reset_password/:${user._id}/:${token.token}`;
+      
+      await sendEmail(user.email, "Password reset", link);
+
+      res.render("success");
+      req.flash("success_msg", "Password reset link sent to your email account");
+    }   
+  } catch (error) {
+    console.error(error);
+    req.flash("error", "An error occurred, Please try again");
+    req.flash("formData", { email });
+    res.redirect("/forgot_password");
+  }
+}
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { password, confirm_password } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
+      throw new Error("Invalid user ID");
+    }
+
+    const user = await User.findById(req.params.userId);
+    const token = await Token.findOne({
+      userId: user.id,
+      token: req.params.token,
+    });
+    console.log(req.params.userId);
+    console.log(req.params.token);
+    // const errors = [];
+
+    // if (!password || !confirm_password) {
+    //   errors.push("Please fill in all fields");
+    // }
+
+    // if (password !== confirm_password) {
+    //   errors.push("Password does not match");
+    // }
+
+    // if (password.length < 6) {
+    //   errors.push("Password should be at least 6 character");
+    // }
+
+    // if (!user || !token) {
+    //   errors.push("invalid link or expired");
+    // }
+
+    // if (condition) {
+    //   req.flash("error", errors);
+    //   res.redirect("/error");
+    // } else {
+    //   user.password = req.body.password;
+    //   await user.save();
+    //   await token.delete();
+
+    //   res.render("login");
+    //   req.flash("success", "Password has been recovered, please login");
+    // }
+
+  } catch (error) {
+    console.error(error);
+    req.flash("error", "An error occurred, Please try again");
+    res.redirect("/reset_password");
+  }
+
 }

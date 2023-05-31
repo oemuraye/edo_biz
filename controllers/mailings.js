@@ -18,13 +18,13 @@ export const feedback = (req, res) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "oemuraye@gmail.com", 
+      user: process.env.ADMIN_EMAIL,
       pass: process.env.gmail_password,
     },
   });
 
   let mailOptions = {
-    to: "oemuraye360@outlook.com",
+    to: process.env.ADMIN_EMAIL,
     from: req.body.email,
     subject: "Contact Request Feedback",
     html: output,
@@ -32,9 +32,9 @@ export const feedback = (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return res.render("contact", { email_failed_msg: "Error: Email was not sent!" });
+      return res.render("passwordRecovery", { email_failed_msg: "Error: Email was not sent!" });
     }
     // console.log(req.body.email);
-    res.status(200).render("contact", { email_success_msg: "Email sent successfully" });
+    res.status(200).render("success", { email_success_msg: "Email sent successfully" });
   });
 };
