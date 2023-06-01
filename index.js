@@ -47,6 +47,9 @@ const PORT = process.env.PORT || 5000;
 const connectionURL = process.env.MONGODB_URL;
 
 app.use("/", routes);
+app.get("*", (req, res) => {
+  res.redirect("/error"); // Redirect to the error page
+});
 
 // app.listen(PORT, () => {
 //   console.log(` server started on port http://localhost:${PORT} `);
