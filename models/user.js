@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
   },
   academic_qualification: {
     type: String,
-    require: true,
+    required: true,
   },
   course_studied: {
     type: String,
