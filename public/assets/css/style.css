@@ -2053,3 +2053,7 @@ section {
 .cusspan{
   font-size: 18px !important;
 }
+
+.flash-msg .fa-times {
+  font-size: 30px;
+}

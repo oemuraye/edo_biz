@@ -32,7 +32,8 @@ router.get("/login", loginPage);
 router.get("/register", registerPage);
 router.get("/form", bootcampForm);
 router.get("/forgot_password", passwordRecovery);
-router.get("/reset_password/:userId/:token", passwordReset);
+router.get("/reset_password", passwordReset);
+// router.get("/reset_password/:userId/:token", passwordReset);
 
 // Feedback-contact mailing
 router.post("/feedback", feedback);

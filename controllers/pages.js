@@ -76,7 +76,8 @@ export const successPage = (req, res) => {
 export const errorPage = (req, res) => {
     const student_data = req.session.user;
     const token = req.session.token;
-    res.render("error", { title: "Error" , student_data, token});
+    const errors = req.flash("error");
+    res.render("error", { title: "Error" , student_data, token, errors});
 }
 
 export const teamPage = (req, res) => {
@@ -130,7 +131,7 @@ export const passwordRecovery = (req, res) => {
 
 export const passwordReset = (req, res) => {
     const errors = req.flash("error");
-    const userId = req.params.userId
-    const token = req.params.token
+    const userId = req.query.userId
+    const token = req.query.token
     res.render("passwordReset", { title: "Password Reset", errors, userId, token });
 };

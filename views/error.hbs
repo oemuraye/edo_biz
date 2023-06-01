@@ -68,13 +68,13 @@
     <div class="mb-4">
       <i class="checkmark text-danger fa fa-warning"></i>
     </div>
-    {{> flash}}
     <center>
       <div id="loading_show"><a href="#" class="h5-top" onclick="history.back(); return false;">Go back</a><div id="loader"></div></div>
       {{!-- <div id="loading_show"><h5 class="h5-top">Getting link</h5><div id="loader"></div></div> --}}
     </center>
     
-      <h1>Ooops! There is an error</h1> 
+    <h1>Ooops! There is an error</h1> 
+    <p>{{> flash}}</p>
       {{!-- <p>We received your purchase request;<br/> we'll be in touch shortly!</p> --}}
   </div>
 
