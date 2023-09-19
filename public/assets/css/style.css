@@ -67,7 +67,7 @@ section {
   padding: 15px 0;
   background: #000080;
   min-height: 40px;
-  margin-top: 82px;
+  margin-top: 105px;
   color: #fff;
 }
 @media (max-width: 992px) {
@@ -157,8 +157,12 @@ section {
   /* padding: 15px 0; */
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
 }
+.header.header-scrolled .nav-link.active {
+  color: #6f7079;
+}
+.header.header-scrolled .mobile-nav-toggle,
 .header.header-scrolled .navbar a {
-  color: #013289;
+  color: #4154f1;
 }
 .header .logo {
   line-height: 0;
@@ -185,6 +189,10 @@ section {
 }
 .top-info a {
   color: #fff !important;
+}
+.mobile-top-info {
+  position: absolute;
+  bottom: 0;
 }
 
 /*--------------------------------------------------------------
@@ -227,6 +235,10 @@ section {
 .navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
   color: #4154f1;
 }
+.nav-link.active {
+  color: #4154f1; 
+  font-weight: bolder; 
+}
 .navbar .getstarted, .navbar .getstarted:focus {
   background: #4154f1;
   padding: 8px 20px;
@@ -252,6 +264,7 @@ section {
   box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
   transition: 0.3s;
   border-radius: 4px;
+  height: 75%;
 }
 .navbar .dropdown ul li {
   min-width: 200px;
@@ -352,7 +365,7 @@ section {
   right: 15px;
   bottom: 15px;
   /* left: 15px; */
-  width: 75%;
+  width: 85%;
   padding: 10px 0;
   border-radius: 10px;
   background-color: #fff;
@@ -403,9 +416,14 @@ section {
 .hero {
   width: 100%;
   height: 100vh;
-  background: url(../img/blog/blog-recent-5.jpg) top center no-repeat;
   /* background: url(../img/hero.jpg) top center no-repeat; */
-  /* background: url(../img/hero-bg.png) top center no-repeat; */
+  background: url(../img/hero-bg.png) top center no-repeat;
+  background-size: cover;
+}
+.home-hero {
+  width: 100%;
+  height: 100vh;
+  background: url(../img/blog/blog-recent-5.jpg) top center no-repeat;
   background-size: cover;
 }
 .hero h1 {

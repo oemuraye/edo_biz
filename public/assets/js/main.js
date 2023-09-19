@@ -135,7 +135,7 @@
   );
 
   /**
-   * Scrool with ofset on links with a class name .scrollto
+   * Scroll with offset on links with a class name .scrollto
    */
   on(
     "click",
@@ -158,7 +158,7 @@
   );
 
   /**
-   * Scroll with ofset on page load with hash links in the url
+   * Scroll with offset on page load with hash links in the url
    */
   window.addEventListener("load", () => {
     if (window.location.hash) {
@@ -205,7 +205,7 @@
   });
 
   /**
-   * Porfolio isotope and filter
+   * Portfolio isotope and filter
    */
   window.addEventListener("load", () => {
     let portfolioContainer = select(".portfolio-container");
@@ -360,3 +360,26 @@ const verify_payment = async () => {
     console.log(error);
   }
 };
+
+
+// Change nav-link active class as page changes
+function setActiveLink() {
+  let currentUrl = window.location.pathname;
+  currentUrl = currentUrl.replace(/^\/+/, "")
+  let navLinks = document.querySelectorAll('.nav-link');
+  console.log(currentUrl)
+  
+  navLinks.forEach(function (link) {
+    // Remove the 'active' class from all links
+    link.classList.remove('active');
+    console.log(link.getAttribute('href'))
+    
+    // Check if the link's href matches the current URL
+    if (link.getAttribute('href') === currentUrl) {
+      console.log(link)
+      // Add the 'active' class to the matching link
+      link.classList.add('active');
+    }
+  });
+}
+setActiveLink()

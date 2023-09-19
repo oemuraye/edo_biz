@@ -83,10 +83,10 @@
             </ul>
           </li> --}}
           
-          <li><a  href="about"> About </a></li>
-          <li><a  href="programme"> Programme </a></li>
+          <li><a class="nav-link" href="about"> About </a></li>
+          <li><a class="nav-link" href="programme"> Programme </a></li>
            
-          <li><a  href="contact"> Contact </a></li>
+          <li><a class="nav-link" href="contact"> Contact </a></li>
 
           {{#if token}}
           {{#student_data}}
@@ -101,18 +101,18 @@
             </li>
            {{/student_data}}
           {{else}}
-          <li><a  href="login"> Login </a></li>
+          <li><a class="nav-link" href="login"> Login </a></li>
           {{/if}}
-          
-          <section class="top-info py-2 show_on_mobile">
-            <div class="container container-xl d-flex justify-content-between flex-wrap gap-3">
-              <div class="d-flex gap-3">
+
+          <section class="top-info mobile-top-info py-2 show_on_mobile px-2">
+            <div class="container container-xl d-flex justify-content-between flex-wrap">
+              <div class="d-flex gap-2 ">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
                 <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                 <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
               </div>
-              <div class="d-flex flex-wrap gap-3">
+              <div class="d-flex flex-wrap">
                 <a href="mailto:info@edobusinessschool.com" class="mail d-flex gap-1 align-items-center">
                   <i class="bi bi-envelope"></i>
                   <span>info@edobusinessschool.com</span>
