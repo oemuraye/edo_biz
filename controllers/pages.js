@@ -9,7 +9,7 @@ export const homePage = (req, res) => {
 export const aboutPage = (req, res) => {
     const student_data = req.session.user;
     const token = req.session.token;
-    res.render('about', { title: "about" , student_data, token})
+    res.render('program', { title: "about" , student_data, token})
 }
 
 
@@ -58,7 +58,7 @@ export const portfolioDetailsPage = (req, res) => {
 export const programPage = (req, res) => {
     const student_data = req.session.user;
     const token = req.session.token;
-    res.render('program', { title: "Program" , student_data, token})
+    res.render('about', { title: "Program" , student_data, token})
 }
 
 export const programmePage = (req, res) => {
