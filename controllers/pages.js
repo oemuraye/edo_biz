@@ -61,6 +61,12 @@ export const programPage = (req, res) => {
     res.render('about', { title: "Program" , student_data, token})
 }
 
+export const programOfferedPage = (req, res) => {
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('programOffer', { title: "EBS Programs" , student_data, token})
+}
+
 export const programmePage = (req, res) => {
     const student_data = req.session.user;
     const token = req.session.token;
@@ -82,6 +88,12 @@ export const teamPage = (req, res) => {
     const student_data = req.session.user;
     const token = req.session.token;
     res.render('team', {title: "Team", student_data, token})
+}
+
+export const galleryPage = (req, res) => {
+    const student_data = req.session.user;
+    const token = req.session.token;
+    res.render('gallery', {title: "Photo Speaks", student_data, token})
 }
 
 export const student_dashboard = (req, res) => {
