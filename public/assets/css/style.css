@@ -851,7 +851,7 @@ section {
 /* For background particle */
 #particles-js {
   width: 100%;
-  height: 100%;
+  height: auto;
   /* background-color: #0e0c0c00; */
   background-color: #0e0c0c;
   background-size: cover;
@@ -888,14 +888,15 @@ canvas.particles-js-canvas-el {
   object-fit: fill;
 }
 .photo_speaks-section div {
-  height: 150px;
+  height: 200px;
   width: 500px;
   margin: 100px auto;
   position: relative;
 }
 .photo_speaks-section img {
-  height: 150px;
+  height: 200px;
   position: absolute;
+  width: 250px;
   left: 0;
   offset-path: path('m 0 50 q 50-30 100-30 t 100 30 100 0 100-30 100 30');
   box-shadow: 1px 1px 3px #0008;
