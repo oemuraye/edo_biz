@@ -367,16 +367,13 @@ function setActiveLink() {
   let currentUrl = window.location.pathname;
   currentUrl = currentUrl.replace(/^\/+/, "")
   let navLinks = document.querySelectorAll('.nav-link');
-  console.log(currentUrl)
   
   navLinks.forEach(function (link) {
     // Remove the 'active' class from all links
     link.classList.remove('active');
-    console.log(link.getAttribute('href'))
     
     // Check if the link's href matches the current URL
     if (link.getAttribute('href') === currentUrl) {
-      console.log(link)
       // Add the 'active' class to the matching link
       link.classList.add('active');
     }
