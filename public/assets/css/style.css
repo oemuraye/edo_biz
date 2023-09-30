@@ -5,6 +5,7 @@
 :root {
   scroll-behavior: smooth;
   --basic-color: #4154f1;
+  --secondary-color: #4154f1;
 
 }
 
@@ -866,8 +867,17 @@ canvas.particles-js-canvas-el {
   height: 1100px !important;
   z-index: -1;
 }
-.gallery-section .details > div {
+.gallery-section .details {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.gallery-section .details > div img {
   overflow: hidden;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
 }
 .gallery-section .details img:hover {
   transform: scale(1.2);
@@ -876,16 +886,16 @@ canvas.particles-js-canvas-el {
   cursor: pointer;
 }
 .gallery-section .btn-primary {
-  background-color: var(--basic-color) ;
-  padding: 10px;
+  background-color: #4154f14a;
+  padding: 7px 15px;
   font-size: 18px;
-  background-image: linear-gradient(to bottom right, #4eac7f, var(--svoc-purple));
+  background-image: linear-gradient(to bottom right, #24133d, #4154f14a);
   letter-spacing: 2px;
 }
 .lightbox .lb-image { 
   max-width: 600px !important;
   max-height: 400px !important;
-  object-fit: fill;
+  object-fit: cover;
 }
 .photo_speaks-section div {
   height: 200px;
@@ -953,6 +963,94 @@ canvas.particles-js-canvas-el {
 .photo_speaks-section img:last-child:nth-child(5) {
   offset-distance: 100%;
 }
+@media (min-width: 991px) {
+  .gallery-section .details {
+    display: none;
+  }
+}
+
+/* Gallery Page */
+.gallery-page {
+  display: flex;
+  padding: 2px;
+  transition: 0.3s;
+  flex-wrap: wrap;
+}
+
+.gallery-page:hover .gallery__image {
+  filter: grayscale(1);
+}
+
+.gallery__column {
+  /* display: flex;
+  flex-direction: column;
+  width: 25%; */
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.gallery__link {
+  margin: 2px;
+  overflow: hidden;
+}
+
+.gallery__link:hover .gallery__image {
+  filter: grayscale(0);
+}
+
+.gallery__link:hover .gallery__caption {
+  opacity: 1;
+}
+
+.gallery__thumb {
+  position: relative;
+}
+
+.gallery__image {
+  /* display: block;
+  width: 100%;
+  transition: 0.3s;
+  height: 100%;
+  object-fit: cover; */
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.gallery__image:hover {
+  transform: scale(1.1);
+  transition: 1s;
+}
+
+.gallery__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 25px 15px 15px;
+  width: 100%;
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  color: white;
+  opacity: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+  transition: 0.3s;
+}
+@media screen and (max-width: 800px) {
+  .gallery__column {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .gallery__column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
 
 
 /*--------------------------------------------------------------
