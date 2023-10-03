@@ -6,6 +6,7 @@ import { feedback } from "../controllers/mailings.js";
 import { bootcamp_reg, logout, register, signin, upload } from "../controllers/user.js";
 import { get_payment_receipt, paystack_init_payment, paystack_verify_payment } from "../controllers/payment.js";
 import { checkToken } from "../middleware/auth.js";
+import { calender_integration } from "../controllers/calander.js";
 
 
 // const upload = multer({ dest: "./public/" });
@@ -49,5 +50,8 @@ router.post("/boot_reg", bootcamp_reg);
 router.post("/paystack_pay", paystack_init_payment)
 router.get("/paystack/callback/:id", paystack_verify_payment);
 router.get("/receipt/:id", get_payment_receipt);
+
+// Calender integration
+router.get("/calendar", calender_integration);
 
 export default router;
