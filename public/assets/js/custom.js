@@ -51,3 +51,63 @@
 //     })
 //     .catch((err) => console.log("Can’t access " + url + " response. Blocked by browser?" + err));
 // }
+
+// Payment with paystack
+// const pay_btn = document.querySelector("#pay-btn");
+
+// pay_btn?.addEventListener("click", async () => {
+//   const name = document.querySelector(".student-name");
+//   const email = document.querySelector(".student-email");
+//   const amount = document.querySelector(".course-fee");
+//   console.log('1234567');
+
+
+//   try {
+//     const response = await fetch("/paystack_pay", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         fullName: name.innerHTML,
+//         email: email.innerHTML,
+//         amount: amount.innerHTML,
+//       }),
+//     });
+
+//     if (!response.ok) {
+//       throw new Error("Network response was not ok");
+//       console.log(response);
+//     } else {
+//       window.location.href = response.url.split("?")[0];
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+// let myTimeout;
+
+// if (document.querySelector(".payment-ref")) {
+//   myTimeout = setTimeout(() => {
+//     verify_payment();
+//   }, 5000);
+// }
+// const verify_payment = async () => {
+//   const ref = document.querySelector(".payment-ref").innerHTML;
+//   const payment_div = document.querySelector('.payment-check');
+
+//   try {
+//     const response = await fetch(`/paystack/callback/${ref}`);
+
+//     if (!response.ok) {
+//       console.log(response);
+//     } else {
+//       clearTimeout(myTimeout)
+//       payment_div.innerHTML = `<span class="text-success">Paid <i class="fa fa-check-circle" aria-hidden="true"></i></span>`;
+//       // console.log(response);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

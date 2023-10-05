@@ -1,9 +1,3 @@
-/**
- * Template Name: FlexStart - v1.7.0
- * Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
- * Author: BootstrapMade.com
- * License: https://bootstrapmade.com/license/
- */
 (function () {
   "use strict";
 
@@ -308,9 +302,11 @@
 const pay_btn = document.querySelector("#pay-btn");
 
 pay_btn?.addEventListener("click", async () => {
+  console.log('hjxvsdvsd');
   const name = document.querySelector(".student-name");
   const email = document.querySelector(".student-email");
   const amount = document.querySelector(".course-fee");
+
 
   try {
     const response = await fetch("/paystack_pay", {
@@ -327,6 +323,7 @@ pay_btn?.addEventListener("click", async () => {
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
+      console.log(response);
     } else {
       window.location.href = response.url.split("?")[0];
     }
