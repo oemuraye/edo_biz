@@ -302,7 +302,6 @@
 const pay_btn = document.querySelector("#pay-btn");
 
 pay_btn?.addEventListener("click", async () => {
-  console.log('hjxvsdvsd');
   const name = document.querySelector(".student-name");
   const email = document.querySelector(".student-email");
   const amount = document.querySelector(".course-fee");
