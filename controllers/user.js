@@ -2,9 +2,13 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import path from "path";
+import crypto from "crypto";
+import mongoose from "mongoose";
 
 import User from '../models/user.js';
+import Token from '../models/token.js';
 import BootcampUser from '../models/bootcamp.js';
+import { sendEmail } from "../utils/sendEmail.js";
 
 const img_storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -268,4 +272,101 @@ export const bootcamp_reg = async (req, res) => {
     req.flash("formData", {  first_name, last_name, email, contact, dob, gender, location, professional_background, why_join_camp });
     res.redirect("/form");
   }
+}
+
+
+// Password reset
+
+export const sendResetPassword = async (req, res) => {
+  const email = req.body.email
+  
+  try {
+    const user = await User.findOne({ email });
+    const errors = [];
+
+    if (!email) {
+      errors.push("Please fill in an email address");
+    }
+    if (email && !user) {
+      errors.push("There is no user with this email");
+    }
+
+    if (errors.length > 0) {
+      req.flash("error", errors);
+      req.flash("formData", { email });
+      res.redirect("/forgot_password");
+    } else {
+      let token = await Token.findOne({ userId: user._id });
+      if (!token) {
+        token = await new Token({
+          userId: user._id,
+          token: crypto.randomBytes(32).toString("hex"),
+        }).save();
+      }
+
+      const link = `${process.env.BASE_URL}/reset_password?userId=${user._id}&token=${token.token}`;
+      
+      await sendEmail(user.email, "Password reset", link);
+
+      req.flash("success_msg", "Password reset link sent to your email account. Link Expires in 1hour");
+      res.redirect("/success");
+    }   
+  } catch (error) {
+    console.error(error);
+    req.flash("error", "An error occurred, Please try again");
+    req.flash("formData", { email });
+    res.redirect("/forgot_password");
+  }
+}
+
+export const resetPassword = async (req, res) => {
+  const { userId, token } = req.params
+  try {
+    const { password, confirm_password } = req.body;
+    const user = await User.findById(userId);
+    const userToken = await Token.findOne({
+      userId: user._id,
+      token: token,
+    });
+    const errors = [];
+
+    if (!userToken) {
+      errors.push("Invalid or Expired link");
+    }
+    
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      errors.push("Invalid user ID");
+    }
+
+    if (!password || !confirm_password) {
+      errors.push("Please fill in all fields");
+    }
+
+    if (password !== confirm_password) {
+      errors.push("Password does not match");
+    }
+
+    if (password.length < 6) {
+      errors.push("Password should be at least 6 character");
+    }
+
+    if (errors.length > 0) {
+      req.flash("error", errors[0]);
+      res.redirect(`/reset_password?userId=${userId}&token=${token}`);
+    } else {
+      const hashedNewPassword = await bcrypt.hash(password, 10);
+      user.password = hashedNewPassword;
+      await user.save();
+      await userToken.deleteOne({ _id: userToken._id });
+
+      req.flash("success_msg", "Password reset successful, please login");
+      res.redirect("/login");
+    }
+
+  } catch (error) {
+    console.error(error);
+    req.flash("error", "An error occurred, Please try again");
+    res.redirect(`/reset_password?userId=${userId}&token=${token}`);
+  }
+
 }
