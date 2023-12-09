@@ -1,9 +1,9 @@
 import express from "express";
 import multer from "multer";
 
-import { aboutPage, blogPage, blogSinglePage, bootcampForm, contactPage, detailPage, errorPage, faqPage, galleryPage, homePage, innerPage, loginPage, portfolioDetailsPage, programOfferedPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
+import { aboutPage, blogPage, blogSinglePage, bootcampForm, contactPage, detailPage, errorPage, faqPage, galleryPage, homePage, innerPage, loginPage, passwordRecovery, passwordReset, portfolioDetailsPage, programOfferedPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
 import { feedback } from "../controllers/mailings.js";
-import { bootcamp_reg, logout, register, signin, upload } from "../controllers/user.js";
+import { bootcamp_reg, logout, register, resetPassword, sendResetPassword, signin, upload } from "../controllers/user.js";
 import { get_payment_receipt, paystack_init_payment, paystack_verify_payment } from "../controllers/payment.js";
 import { checkToken } from "../middleware/auth.js";
 
@@ -33,6 +33,9 @@ router.get("/dashboard", checkToken, student_dashboard);
 router.get("/login", loginPage);
 router.get("/register", registerPage);
 router.get("/form", bootcampForm);
+router.get("/forgot_password", passwordRecovery);
+router.get("/reset_password", passwordReset);
+// router.get("/reset_password/:userId/:token", passwordReset);
 
 // Feedback-contact mailing
 router.post("/feedback", feedback);
@@ -49,5 +52,9 @@ router.post("/boot_reg", bootcamp_reg);
 router.post("/paystack_pay", paystack_init_payment)
 router.get("/paystack/callback/:id", paystack_verify_payment);
 router.get("/receipt/:id", get_payment_receipt);
+
+// password reset
+router.post("/password_reset", sendResetPassword);
+router.post("/reset-password/:userId/:token", resetPassword);
 
 export default router;

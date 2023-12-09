@@ -21,8 +21,6 @@
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-        </style>
-    <style>
         body {
           text-align: center;
           padding: 40px 0;
@@ -42,19 +40,18 @@
             margin: 0;
           }
         i {
-          color: #1742ff;
-          font-size: 100px;
+          color: #fff;
+          font-size: 20px;
           line-height: 200px;
-          margin-left:-15px;
         }
         .card {
 
           background: white;
-          padding: 60px;
+          padding: 30px;
           border-radius: 4px;
           box-shadow: 0 2px 3px #687cd4;
           display: inline-block;
-          margin: 80px auto;
+          {{!-- margin: 0 auto; --}}
         }
 
         .h5-top{
@@ -72,8 +69,9 @@
       <div id="loading_show"><h5 class="h5-top">Getting link</h5><div id="loader"></div></div>
     </center>
     
-      <h1>Success</h1> 
-      <p>We received your request;<br/> we'll be in touch shortly!</p>
+    <h1>Success</h1> 
+    <p>We received your request;<br/> we'll be in touch shortly!</p>
+    <div class="flash-msg mt-2">{{> flash}}</div>
   </div>
 
   <!-- Main JS File -->
