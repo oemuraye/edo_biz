@@ -1,11 +1,7 @@
 import express from "express";
 import multer from "multer";
 
-<<<<<<<<< Temporary merge branch 1
-import { aboutPage, blogPage, blogSinglePage, bootcampForm, contactPage, detailPage, errorPage, faqPage, homePage, innerPage, loginPage, passwordRecovery, passwordReset, portfolioDetailsPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
-=========
-import { aboutPage, blogPage, blogSinglePage, bootcampForm, contactPage, detailPage, errorPage, faqPage, galleryPage, homePage, innerPage, loginPage, portfolioDetailsPage, programOfferedPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
->>>>>>>>> Temporary merge branch 2
+import { aboutPage, blogPage, blogSinglePage, bootcampForm, contactPage, detailPage, errorPage, faqPage, galleryPage, homePage, innerPage, loginPage, passwordRecovery, passwordReset, portfolioDetailsPage, programOfferedPage, programPage, programmePage, registerPage, student_dashboard, successPage, teamPage, } from "../controllers/pages.js";
 import { feedback } from "../controllers/mailings.js";
 import { bootcamp_reg, logout, register, resetPassword, sendResetPassword, signin, upload } from "../controllers/user.js";
 import { get_payment_receipt, paystack_init_payment, paystack_verify_payment } from "../controllers/payment.js";
